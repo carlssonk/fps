@@ -7,6 +7,12 @@ module.exports = {
     filename: "bundle.js",
     path: path.resolve(__dirname, "dist")
   },
+  // resolve: {
+  //   alias: {
+  //     cannon: path.resolve(__dirname, "./node_modules/cannon-es/dist/cannon-es.js")
+  //   },
+  //   extensions: ['.tsx', '.ts', '.js'],
+  // },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/index.html",

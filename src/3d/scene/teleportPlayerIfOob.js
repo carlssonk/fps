@@ -3,7 +3,7 @@ import { playerCollider } from "../../main";
 
 export const teleportPlayerIfOob = () => {
 
-  if (camera.position.y <= - 25) {
+  if (camera.position.y <= - 5) {
 
     playerCollider.start.set(0, 0.35, 0);
     playerCollider.end.set(0, 1, 0);

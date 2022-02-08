@@ -5,7 +5,7 @@ export const controls = (deltaTime) => {
 
 
   // gives a bit of air control
-  const speedDelta = deltaTime * (playerOnFloor ? 20 : 8);
+  const speedDelta = deltaTime * (playerOnFloor ? 100 : 20);
 
   if (keyStates['KeyW']) {
 

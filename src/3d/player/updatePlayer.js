@@ -2,15 +2,15 @@ import { camera, playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider
 
 export const updatePlayer = (deltaTime) => {
 
-  let damping = Math.exp(- 4 * deltaTime) - 1;
-  console.log(damping)
+  let damping = Math.exp(- 20 * deltaTime) - 1;
+
 
   if (!playerOnFloor) {
 
     playerVelocity.y -= GRAVITY * deltaTime;
 
     // small air resistance
-    damping *= 0.1;
+    damping *= 0.2;
 
   }
 

@@ -17,6 +17,5 @@ export const throwBall = () => {
 
   setSphereIdx((sphereIdx + 1) % spheres.length)
   // sphereIdx = (sphereIdx + 1) % spheres.length;
-  console.log(sphereIdx)
 
 }

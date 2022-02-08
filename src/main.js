@@ -1,6 +1,7 @@
 import "./styles/main.css"
 
 import * as THREE from 'three';
+import * as CANNON from 'cannon-es'
 
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 
@@ -64,10 +65,54 @@ for (let i = 0; i < NUM_SPHERES; i++) {
 
 }
 
+
+
+// CANNON 
+// import { World } from 'cannon-es'
+
+const world = new CANNON.World()
+world.gravity.set(0, -9.82, 0)
+
+const normalMaterial = new THREE.MeshNormalMaterial()
+
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
+const cubeMesh = new THREE.Mesh(cubeGeometry, normalMaterial)
+// cubeMesh.position.x = -3
+// cubeMesh.position.y = 3
+// cubeMesh.castShadow = true
+scene.add(cubeMesh)
+const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
+const cubeBody = new CANNON.Body({ mass: 1 })
+cubeBody.addShape(cubeShape)
+cubeBody.position.x = cubeMesh.position.x
+cubeBody.position.y = cubeMesh.position.y
+cubeBody.position.z = cubeMesh.position.z
+world.addBody(cubeBody)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const worldOctree = new Octree();
-
 export const playerCollider = new Capsule(new THREE.Vector3(0, 0.35, 0), new THREE.Vector3(0, 1, 0), 0.35);
-
 export const playerVelocity = new THREE.Vector3();
 export const playerDirection = new THREE.Vector3();
 
@@ -162,6 +207,24 @@ import { createGameLoop } from "./gameLoop"
 
 const myGameLoop = (deltaTime) => {
 
+  world.step(deltaTime)
+
+  // console.log(cubeBody.position)
+  // Copy coordinates from Cannon to Three.js
+  // cubeMesh.position.set(
+  //   cubeBody.position.x,
+  //   cubeBody.position.y,
+  //   cubeBody.position.z
+  // )
+  // cubeMesh.quaternion.set(
+  //   cubeBody.quaternion.x,
+  //   cubeBody.quaternion.y,
+  //   cubeBody.quaternion.z,
+  //   cubeBody.quaternion.w
+  // )
+
+
+
   controls(deltaTime);
 
   updatePlayer(deltaTime);
@@ -189,34 +252,3 @@ function animate(deltaTime) {
   requestAnimationFrame(animate);
 
 }
-
-
-
-
-
-// function animate() {
-
-//   const deltaTime = Math.min(0.05, clock.getDelta()) / STEPS_PER_FRAME;
-
-//   // we look for collisions in substeps to mitigate the risk of
-//   // an object traversing another too quickly for detection.
-
-//   for (let i = 0; i < STEPS_PER_FRAME; i++) {
-
-//     controls(deltaTime);
-
-//     updatePlayer(deltaTime);
-
-//     updateSpheres(deltaTime);
-
-//     teleportPlayerIfOob();
-
-//   }
-
-//   renderer.render(scene, camera);
-
-//   stats.update();
-
-//   requestAnimationFrame(animate);
-
-// }
