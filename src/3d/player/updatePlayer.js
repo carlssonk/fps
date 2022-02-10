@@ -3,7 +3,6 @@ import { camera, playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider
 export const updatePlayer = (deltaTime) => {
 
   let damping = Math.exp(- 4 * deltaTime) - 1;
-  console.log(damping)
 
   if (!playerOnFloor) {
 
