@@ -1,4 +1,4 @@
-import { spheres, sphereIdx, camera, playerDirection, playerCollider, mouseTime, playerVelocity, setSphereIdx } from "../../main";
+import { spheres, sphereIdx, camera, playerDirection, playerCollider, mouseTime, playerVelocity, setSphereIdx } from "../index";
 
 export const throwBall = () => {
 

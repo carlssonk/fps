@@ -1,7 +1,6 @@
 import "./styles/main.css"
 
 import * as THREE from 'three';
-import * as CANNON from 'cannon-es'
 
 import Stats from 'three/examples/jsm/libs/stats.module.js';
 
@@ -14,7 +13,7 @@ camera.rotation.order = 'YXZ';
 
 const clock = new THREE.Clock();
 
-import { createScene } from "./3d/scene/createScene.js"
+import { createScene } from "./scene/createScene.js"
 export const scene = createScene();
 
 
@@ -67,31 +66,6 @@ for (let i = 0; i < NUM_SPHERES; i++) {
 
 
 
-// CANNON 
-// import { World } from 'cannon-es'
-
-const world = new CANNON.World()
-world.gravity.set(0, -9.82, 0)
-
-const normalMaterial = new THREE.MeshNormalMaterial()
-
-const cubeGeometry = new THREE.BoxGeometry(1, 1, 1)
-const cubeMesh = new THREE.Mesh(cubeGeometry, normalMaterial)
-// cubeMesh.position.x = -3
-// cubeMesh.position.y = 3
-// cubeMesh.castShadow = true
-scene.add(cubeMesh)
-const cubeShape = new CANNON.Box(new CANNON.Vec3(0.5, 0.5, 0.5))
-const cubeBody = new CANNON.Body({ mass: 1 })
-cubeBody.addShape(cubeShape)
-cubeBody.position.x = cubeMesh.position.x
-cubeBody.position.y = cubeMesh.position.y
-cubeBody.position.z = cubeMesh.position.z
-world.addBody(cubeBody)
-
-
-
-
 
 
 
@@ -125,7 +99,7 @@ export const setMouseTime = (value) => mouseTime = value;
 
 export const keyStates = {};
 
-import { throwBall } from "./3d/player/throwBall"
+import { throwBall } from "./player/throwBall"
 
 document.addEventListener('keydown', (event) => {
 
@@ -182,48 +156,30 @@ function onWindowResize() {
 
 
 // Player controls, W A S D, JUMP etc.
-import { controls } from "./3d/player/controls.js"
+import { controls } from "./input/controls"
 
 // Teleport player if out of bounds (outside playable map)
-import { teleportPlayerIfOob } from "./3d/scene/teleportPlayerIfOob.js"
+import { teleportPlayerIfOob } from "./scene/teleportPlayerIfOob"
 
 // Update player position
-import { updatePlayer } from "./3d/player/updatePlayer"
+import { updatePlayer } from "./player/updatePlayer"
 
 // Update Spheres position
-import { updateSpheres } from "./3d/scene/updateSpheres"
+import { updateSpheres } from "./scene/updateSpheres"
 
 // Load a gltf/glb model
-import { mapLoader } from "./3d/scene/mapLoader.js"
+import { mapLoader } from "./scene/mapLoader"
 // Load model
-import WORLD from "./3d/models/collision-world.glb"
+import WORLD from "./models/collision-world.glb"
 mapLoader(WORLD, () => {
   animate();
 })
 
 
-import { createGameLoop } from "./gameLoop"
+import { createGameLoop } from "./utils"
 
 
 const myGameLoop = (deltaTime) => {
-
-  world.step(deltaTime)
-
-  // console.log(cubeBody.position)
-  // Copy coordinates from Cannon to Three.js
-  // cubeMesh.position.set(
-  //   cubeBody.position.x,
-  //   cubeBody.position.y,
-  //   cubeBody.position.z
-  // )
-  // cubeMesh.quaternion.set(
-  //   cubeBody.quaternion.x,
-  //   cubeBody.quaternion.y,
-  //   cubeBody.quaternion.z,
-  //   cubeBody.quaternion.w
-  // )
-
-
 
   controls(deltaTime);
 

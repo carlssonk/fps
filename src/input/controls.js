@@ -1,4 +1,4 @@
-import { playerOnFloor, keyStates, playerVelocity, camera, playerDirection } from "../../main";
+import { playerOnFloor, keyStates, playerVelocity, camera, playerDirection } from "../index";
 
 
 export const controls = (deltaTime) => {

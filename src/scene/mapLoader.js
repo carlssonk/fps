@@ -1,6 +1,6 @@
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { scene } from "../../main.js"
-import { worldOctree } from '../../main.js';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
+import { scene } from "../index"
+import { worldOctree } from "../index"
 // import
 
 export const mapLoader = (map, func) => {

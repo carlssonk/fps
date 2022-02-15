@@ -1,4 +1,4 @@
-export const createGameLoop = (func, fps = 60) => {
+export const createGameLoop = (func, fps = 144) => {
   let targetFps = 0, fpsInterval = 0;
   let lastTime = 0, lastOverTime = 0, prevOverTime = 0, deltaTime = 0;
 

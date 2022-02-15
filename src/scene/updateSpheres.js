@@ -1,6 +1,6 @@
 import { playerSphereCollision } from "../collision/playerSphereCollision"
 import { spheresCollisions } from "../collision/spheresCollisions"
-import { spheres, worldOctree, GRAVITY } from "../../main";
+import { spheres, worldOctree, GRAVITY } from "../index";
 
 export const updateSpheres = (deltaTime) => {
 

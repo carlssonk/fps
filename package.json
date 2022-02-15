@@ -4,8 +4,8 @@
   "description": "fps (IN DEVELOPMENT)",
   "main": "./src/main.js",
   "scripts": {
-    "start": "webpack-dev-server --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "start": "webpack-dev-server --open --config ./bundler/webpack.dev.js",
+    "build": "webpack --config ./bundler/webpack.prod.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,6 @@
   },
   "homepage": "https://github.com/carlssonk/fps#readme",
   "dependencies": {
-    "cannon-es": "^0.19.0",
     "clean-webpack-plugin": "^4.0.0",
     "three": "^0.137.5"
   },

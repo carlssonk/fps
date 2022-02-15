@@ -1,4 +1,4 @@
-import { camera, playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider, worldOctree, GRAVITY } from "../../main";
+import { camera, playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider, worldOctree, GRAVITY } from "../index";
 
 export const updatePlayer = (deltaTime) => {
 

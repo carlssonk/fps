@@ -1,4 +1,4 @@
-import { spheres, vector1, vector2, vector3, playerVelocity } from '../../main';
+import { spheres, vector1, vector2, vector3, playerVelocity } from "../index";
 
 export const spheresCollisions = () => {
 
