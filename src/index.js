@@ -8,7 +8,38 @@ import Stats from 'three/examples/jsm/libs/stats.module.js';
 import { Octree } from 'three/examples/jsm/math/Octree.js';
 import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 
-export const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+import { playerMouseMove } from "./input/playerMouseMove";
+
+// Player controls, W A S D, JUMP etc.
+import { controls } from "./input/controls"
+
+// Teleport player if out of bounds (outside playable map)
+import { teleportPlayerIfOob } from "./scene/teleportPlayerIfOob"
+
+// Update player position
+import { updatePlayer } from "./player/updatePlayer"
+
+// Update Spheres position
+import { updateSpheres } from "./scene/updateSpheres"
+
+// Load a gltf/glb model
+import { mapLoader } from "./scene/mapLoader"
+// Load model
+import WORLD from "./models/collision-world.glb"
+mapLoader(WORLD, () => {
+  animate();
+})
+
+
+import { createGameLoop } from "./utils"
+
+// VARIABLES
+let fov = 70;
+export let sensetivity = 2.5;
+
+export const camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, 0.1, 1000);
+
 camera.rotation.order = 'YXZ';
 
 const clock = new THREE.Clock();
@@ -16,6 +47,7 @@ const clock = new THREE.Clock();
 import { createScene } from "./scene/createScene.js"
 export const scene = createScene();
 
+const container = document.getElementById('container');
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setPixelRatio(window.devicePixelRatio);
@@ -23,14 +55,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.VSMShadowMap;
 
-const container = document.getElementById('container');
-
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
 container.appendChild(renderer.domElement);
 
 const stats = new Stats();
 stats.domElement.style.position = 'absolute';
 stats.domElement.style.top = '0px';
-
 container.appendChild(stats.domElement);
 
 export const GRAVITY = 30;
@@ -40,8 +71,8 @@ const SPHERE_RADIUS = 0.2;
 
 const STEPS_PER_FRAME = 5;
 
-const sphereGeometry = new THREE.SphereGeometry(SPHERE_RADIUS, 32, 32);
-const sphereMaterial = new THREE.MeshStandardMaterial({ color: 0x888855, roughness: 0.8, metalness: 0.5 });
+const sphereGeometry = new THREE.IcosahedronGeometry(SPHERE_RADIUS, 5);
+const sphereMaterial = new THREE.MeshLambertMaterial({ color: 0xbbbb44 });
 
 export const vector1 = new THREE.Vector3();
 export const vector2 = new THREE.Vector3();
@@ -60,7 +91,11 @@ for (let i = 0; i < NUM_SPHERES; i++) {
 
   scene.add(sphere);
 
-  spheres.push({ mesh: sphere, collider: new THREE.Sphere(new THREE.Vector3(0, - 100, 0), SPHERE_RADIUS), velocity: new THREE.Vector3() });
+  spheres.push({
+    mesh: sphere,
+    collider: new THREE.Sphere(new THREE.Vector3(0, - 100, 0), SPHERE_RADIUS),
+    velocity: new THREE.Vector3()
+  });
 
 }
 
@@ -69,7 +104,7 @@ for (let i = 0; i < NUM_SPHERES; i++) {
 
 
 
-
+playerMouseMove();
 
 
 
@@ -123,21 +158,16 @@ document.addEventListener('mousedown', () => {
 
 document.addEventListener('mouseup', () => {
 
-  throwBall();
+  if (document.pointerLockElement !== null) throwBall();
 
 });
 
-document.body.addEventListener('mousemove', (event) => {
 
-  if (document.pointerLockElement === document.body) {
 
-    camera.rotation.y -= event.movementX / 500;
-    camera.rotation.x -= event.movementY / 500;
 
-  }
 
-});
 
+// Make game responsive
 window.addEventListener('resize', onWindowResize);
 
 function onWindowResize() {
@@ -150,35 +180,7 @@ function onWindowResize() {
 }
 
 
-
-
-
-
-
-// Player controls, W A S D, JUMP etc.
-import { controls } from "./input/controls"
-
-// Teleport player if out of bounds (outside playable map)
-import { teleportPlayerIfOob } from "./scene/teleportPlayerIfOob"
-
-// Update player position
-import { updatePlayer } from "./player/updatePlayer"
-
-// Update Spheres position
-import { updateSpheres } from "./scene/updateSpheres"
-
-// Load a gltf/glb model
-import { mapLoader } from "./scene/mapLoader"
-// Load model
-import WORLD from "./models/collision-world.glb"
-mapLoader(WORLD, () => {
-  animate();
-})
-
-
-import { createGameLoop } from "./utils"
-
-
+// Container for all functions that are dynamic
 const myGameLoop = (deltaTime) => {
 
   controls(deltaTime);
@@ -192,15 +194,13 @@ const myGameLoop = (deltaTime) => {
   renderer.render(scene, camera);
 
   stats.update();
+
 }
 
+// Create an object that gives us useful setters and getters
+const gameLoop = createGameLoop(myGameLoop)
 
-const gameLoop = createGameLoop(myGameLoop, 144)
-
-
-
-
-
+// Infinite looper
 function animate(deltaTime) {
 
   gameLoop.loop(deltaTime)

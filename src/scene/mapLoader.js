@@ -22,7 +22,7 @@ export const mapLoader = (map, func) => {
 
         if (child.material.map) {
 
-          child.material.map.anisotropy = 8;
+          child.material.map.anisotropy = 4;
 
         }
 

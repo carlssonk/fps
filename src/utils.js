@@ -18,6 +18,10 @@ export const createGameLoop = (func, fps = 144) => {
       updateFps(value);
     },
 
+    get deltaTime() {
+      return deltaTime;
+    },
+
     // the frame-capped loop function
     loop(time) {
       deltaTime = time - lastTime;
@@ -32,7 +36,6 @@ export const createGameLoop = (func, fps = 144) => {
 
         // "normalize" the delta time (so 1 equals to 1 second)
         deltaTime *= 0.001;
-
         func(deltaTime);
       }
     },
