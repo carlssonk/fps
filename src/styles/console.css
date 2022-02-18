@@ -1,0 +1,98 @@
+@font-face {
+  font-family: "fa-regular";
+  src: url("../fonts/fa-regular-400.woff") format('woff');
+  font-weight: bold;
+  font-style: italic;
+}
+
+.console {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+  height: 400px;
+  min-width: 300px;
+  min-height: 150px;
+  overflow: hidden;
+  resize: both;
+  background: rgb(40, 40, 40);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.console__dragBar {
+  width: 100%;
+  min-height: 30px;
+  background: rgb(80, 80, 80);
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 8px;
+  cursor: default;
+}
+
+.console__exit {
+  font-family: "fa-regular";
+  width: 30px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  cursor: pointer;
+
+}
+.console__exit::before {
+  content: "\f00d";
+}
+
+.console__list {
+  padding: 12px;
+  list-style-type: none;
+  flex-grow: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.console__inputContainer {
+  padding: 12px;
+  margin-top: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+}
+
+.console__input {
+  width: 100%;
+  height: 30px;
+  border: none;
+  outline: none;
+  background: rgb(80, 80, 80);
+  color: rgba(255, 255, 255, 0.9);
+  padding: 0 12px;
+  outline: 1px solid rgba(255, 200, 0, 0.5);
+}
+.console__input:focus {
+  outline: 1px solid rgba(255, 200, 0, 1);
+}
+
+.console__button {
+  width: 80px;
+  height: 30px;
+  border: none;
+  outline: none;
+  background: rgb(80, 80, 80);
+  color: rgba(255, 255, 255, 0.9);
+  margin-left: 12px;
+  cursor: pointer;
+}
+.console__button:active {
+  transform: scale3d(0.96,0.96,0.96);
+  background: rgb(60, 60, 60);
+}

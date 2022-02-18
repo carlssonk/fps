@@ -1,5 +1,6 @@
 import "./styles/main.css"
 
+
 import * as THREE from 'three';
 
 import Stats from 'three/examples/jsm/libs/stats.module.js';
@@ -33,6 +34,10 @@ mapLoader(WORLD, () => {
 
 
 import { createGameLoop } from "./utils"
+
+import { toggleConsole } from "./input/toggleConsole"
+toggleConsole();
+
 
 // VARIABLES
 let fov = 70;
@@ -150,7 +155,7 @@ document.addEventListener('keyup', (event) => {
 
 document.addEventListener('mousedown', () => {
 
-  document.body.requestPointerLock();
+  // document.body.requestPointerLock();
 
   mouseTime = performance.now();
 
