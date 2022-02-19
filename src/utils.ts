@@ -1,10 +1,14 @@
-import { fpsMax } from "./input/commands/settingsHandler";
+import { fpsMax } from './input/commands/settingsHandler';
 
-export const createGameLoop = (func) => {
-  let targetFps = 0, fpsInterval = 0;
-  let lastTime = 0, lastOverTime = 0, prevOverTime = 0, deltaTime = 0;
+export const createGameLoop = (func: (deltaTime: number) => void) => {
+  let targetFps: number = 0;
+  let fpsInterval: number = 0;
+  let lastTime: number = 0;
+  let lastOverTime: number = 0;
+  let prevOverTime: number = 0;
+  let deltaTime: number = 0;
 
-  function updateFps(value) {
+  function updateFps(value: number) {
     targetFps = value;
     fpsInterval = 1000 / targetFps;
   }
@@ -12,8 +16,7 @@ export const createGameLoop = (func) => {
   updateFps(fpsMax);
 
   return {
-
-    set fps(value) {
+    set fps(value: number) {
       updateFps(value);
     },
 
@@ -22,7 +25,7 @@ export const createGameLoop = (func) => {
     },
 
     // the frame-capped loop function
-    loop(time) {
+    loop(time: number) {
       deltaTime = time - lastTime;
 
       if (deltaTime >= fpsInterval) {
@@ -37,12 +40,12 @@ export const createGameLoop = (func) => {
         deltaTime *= 0.001;
         func(deltaTime);
       }
-    },
+    }
   };
-}
+};
 
-export const waitForElement = (selector) => {
-  return new Promise(resolve => {
+export const waitForElement = (selector: string) =>
+  new Promise((resolve) => {
     if (document.querySelector(selector)) {
       return resolve(document.querySelector(selector));
     }
@@ -59,4 +62,3 @@ export const waitForElement = (selector) => {
       subtree: true
     });
   });
-}

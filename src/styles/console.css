@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "fa-regular";
-  src: url("../fonts/fa-regular-400.woff") format('woff');
+  font-family: 'fa-regular';
+  src: url('../fonts/fa-regular-400.woff') format('woff');
   font-weight: bold;
   font-style: italic;
 }
@@ -34,17 +34,16 @@
 }
 
 .console__exit {
-  font-family: "fa-regular";
+  font-family: 'fa-regular';
   width: 30px;
   height: 100%;
   display: grid;
   place-items: center;
   z-index: 100;
   cursor: pointer;
-
 }
 .console__exit::before {
-  content: "\f00d";
+  content: '\f00d';
 }
 .console__exit:hover {
   background: rgb(60, 60, 60);
@@ -100,6 +99,5 @@
   background: rgb(60, 60, 60);
 }
 .console__button:active {
-  transform: scale3d(0.96,0.96,0.96);
-
+  transform: scale3d(0.96, 0.96, 0.96);
 }
