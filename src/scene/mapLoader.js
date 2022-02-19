@@ -1,7 +1,8 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-import { scene } from "../index"
-import { worldOctree } from "../index"
-// import
+import { scene } from "./createScene"
+
+import { Octree } from 'three/examples/jsm/math/Octree.js';
+export const worldOctree = new Octree();
 
 export const mapLoader = (map, func) => {
 

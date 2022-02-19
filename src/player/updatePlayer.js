@@ -1,4 +1,8 @@
-import { camera, playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider, worldOctree, GRAVITY } from "../index";
+
+import { playerOnFloor, setPlayerOnFloor, playerVelocity, playerCollider, camera } from "./player";
+import { gravity } from "../input/commands/settingsHandler";
+import { worldOctree } from "../scene/mapLoader";
+
 
 export const updatePlayer = (deltaTime) => {
 
@@ -7,7 +11,7 @@ export const updatePlayer = (deltaTime) => {
 
   if (!playerOnFloor) {
 
-    playerVelocity.y -= GRAVITY * deltaTime;
+    playerVelocity.y -= gravity * deltaTime;
 
     // small air resistance
     damping *= 0.2;

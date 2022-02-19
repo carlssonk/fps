@@ -1,4 +1,6 @@
-export const createGameLoop = (func, fps = 144) => {
+import { fpsMax } from "./input/commands/settingsHandler";
+
+export const createGameLoop = (func) => {
   let targetFps = 0, fpsInterval = 0;
   let lastTime = 0, lastOverTime = 0, prevOverTime = 0, deltaTime = 0;
 
@@ -7,13 +9,10 @@ export const createGameLoop = (func, fps = 144) => {
     fpsInterval = 1000 / targetFps;
   }
 
-  updateFps(fps);
+  updateFps(fpsMax);
 
   return {
-    // getter/setter for targeted frame rate
-    get fps() {
-      return targetFps;
-    },
+
     set fps(value) {
       updateFps(value);
     },

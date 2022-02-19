@@ -1,5 +1,7 @@
-import { camera, sensetivity } from "../index";
+import { camera } from "../player/player";
+import { sensitivity } from "./commands/settingsHandler";
 import * as THREE from 'three';
+
 
 const _PI_2 = Math.PI / 2;
 
@@ -18,9 +20,8 @@ export const playerMouseMove = () => {
 
 
   function handleMove(movementX, movementY) {
-
     // Rotation speed
-    const speed = 2000 / sensetivity;
+    const speed = 2000 / sensitivity;
 
     // Set new camera rotation
     camera.rotation.y -= movementX / speed;

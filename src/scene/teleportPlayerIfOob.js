@@ -1,5 +1,4 @@
-import { camera } from "../index";
-import { playerCollider } from "../index";
+import { camera, playerCollider } from "../player/player";
 
 export const teleportPlayerIfOob = () => {
 

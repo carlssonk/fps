@@ -96,15 +96,6 @@ const attachDependencies = async () => {
 
 }
 
-// const attachDragHandler = async (rootNodeSelector, dragNodeSelector) => {
-//   // Always wait for a node right after inserting it to the dom
-//   const consoleNode = await waitForElement(rootNodeSelector)
-//   const dragNode = document.querySelector(dragNodeSelector)
-
-//   handleDrag(consoleNode, dragNode)
-
-// }
-
 const handleDrag = (element, dragBar) => {
   // Make the DIV element draggable:
   var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;

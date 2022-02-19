@@ -1,9 +1,6 @@
 import { developerConsole } from "../gui/developerConsole";
-// import { settings } from "./commands/settingsHandler";
 
-export const toggleConsole = () => {
-
-  // console.log(settings)
+export const consoleEventListeners = () => {
 
   document.addEventListener("keydown", (event) => {
 

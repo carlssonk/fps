@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-export const createScene = () => {
+const createScene = () => {
 
   const scene = new THREE.Scene();
 
@@ -10,7 +10,6 @@ export const createScene = () => {
   const fillLight1 = new THREE.HemisphereLight(0x4488bb, 0x002244, 0.5);
   fillLight1.position.set(2, 1, 1);
   scene.add(fillLight1);
-
 
   const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
   directionalLight.position.set(- 5, 25, - 1);
@@ -29,3 +28,23 @@ export const createScene = () => {
 
   return scene
 }
+
+function createRenderer() {
+  const container = document.querySelector("#container")
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.VSMShadowMap;
+
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping
+
+  container.appendChild(renderer.domElement);
+
+  return renderer;
+}
+
+export const scene = createScene();
+export const renderer = createRenderer();

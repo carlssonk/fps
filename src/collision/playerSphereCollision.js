@@ -1,4 +1,8 @@
-import { playerCollider, vector1, vector2, vector3, playerVelocity } from "../index";
+import { playerCollider, playerVelocity } from "../index";
+
+const vector1 = new THREE.Vector3();
+const vector2 = new THREE.Vector3();
+const vector3 = new THREE.Vector3();
 
 export const playerSphereCollision = (sphere) => {
 

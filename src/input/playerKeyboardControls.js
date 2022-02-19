@@ -1,8 +1,10 @@
-import { playerOnFloor, keyStates, playerVelocity, camera, playerDirection } from "../index";
+import { playerOnFloor, playerVelocity, playerDirection } from "../player/player";
+import { camera } from "../player/player";
 import { developerConsole } from "../gui/developerConsole";
 
+const keyStates = {};
 
-export const controls = (deltaTime) => {
+export const playerKeyboardControls = (deltaTime) => {
 
   if (developerConsole.isVisible) return
 
@@ -46,6 +48,7 @@ export const controls = (deltaTime) => {
 
 }
 
+
 function getForwardVector() {
 
   camera.getWorldDirection(playerDirection);
@@ -66,3 +69,19 @@ function getSideVector() {
   return playerDirection;
 
 }
+
+
+document.addEventListener('keydown', (event) => {
+
+  keyStates[event.code] = true;
+
+});
+
+document.addEventListener('keyup', (event) => {
+
+  keyStates[event.code] = false;
+
+});
+
+
+

@@ -1,33 +1,44 @@
 import { developerConsole } from "../../gui/developerConsole";
 import { gameLoop } from "../../index"
+import { player } from "../../player/player";
+
+// Setting Variables
+export let fov = 90
+export let fpsMax = 144;
+export let sensitivity = 2.5;
+export let gravity = 30;
 
 const settingsHandler = () => {
   // Set default/initial settings.
-  let sensetivity = 2;
-  let volume = 1;
-  // let maxFps = 144;
-  let keybindings = {
-    jump: "Space",
-    mForward: "KeyW",
-    mLeft: "KeyA",
-    mRight: "KeyD",
-    mBackward: "KeyS",
-    use: "F"
-  };
+  // let volume = 1;
+
+  // let keybindings = {
+  //   jump: "Space",
+  //   mForward: "KeyW",
+  //   mLeft: "KeyA",
+  //   mRight: "KeyD",
+  //   mBackward: "KeyS",
+  //   use: "F"
+  // };
 
   return {
-    // get fps() {
-    //   return gameLoop.fps;
+    // get fpsMax() {
+    //   return fpsMax;
     // },
-    // set fps(value) {
-    //   gameLoop.fps = value;
+    set fpsMax(value) {
+      gameLoop.fps = fpsMax = value;
+    },
+    // get fov() {
+    //   return fov;
     // },
-    get volume() {
-      return volume;
+    set fov(value) {
+      player.fov = fov = value;
     },
-    set volume(value) {
-      volume = value;
+
+    set sensitivity(value) {
+      sensitivity = value;
     },
+
 
     attachConsole() {
       handleSettingsFromConsole();
@@ -41,13 +52,13 @@ const handleSettingsFromConsole = () => {
 
   // Mapping object used to define commands for our console.
   const commands = {
-    fps_max: (value) => gameLoop.fps = value,
-    // fps_max: (value) => callSetter("fps", value)
+    fps_max: (value) => callSetter("fpsMax", value),
+    fov: (value) => callSetter("fov", value),
+    sensitivity: (value) => callSetter("sensitivity", value)
   };
 
   // Call a setter defined in out settings function.
   const callSetter = (property, value) => {
-    console.log(property, value)
     settings[property] = value;
   };
 
@@ -77,7 +88,6 @@ const handleSettingsFromConsole = () => {
 
     }
   });
-
 
 
   function sendCommandStyle(text) {
