@@ -11,8 +11,10 @@ const keyStates: any = {};
 export const playerKeyboardControls = (deltaTime: number): void => {
   if (developerConsole.isVisible) return;
 
+  const walkSpeed = keyStates['ShiftLeft'] ? 0.5 : 1;
+
   // gives a bit of air control
-  const speedDelta = deltaTime * (playerOnFloor ? 100 : 20);
+  const speedDelta = deltaTime * (playerOnFloor ? 100 * walkSpeed : 20);
 
   if (keyStates['KeyW']) {
     playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
