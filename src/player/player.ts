@@ -18,7 +18,7 @@ export const playerVelocity = new THREE.Vector3();
 export const playerDirection = new THREE.Vector3();
 
 export let playerOnFloor = false;
-export const setPlayerOnFloor = (value: boolean) => (playerOnFloor = value);
+// export const setPlayerOnFloor = (value: boolean) => (playerOnFloor = value);
 
 const playerHandler = () => {
   // Player
@@ -27,6 +27,10 @@ const playerHandler = () => {
   return {
     get camera() {
       return camera;
+    },
+
+    set playerOnFloor(value: boolean) {
+      playerOnFloor = value;
     },
 
     set fov(value: number) {

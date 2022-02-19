@@ -3,10 +3,14 @@ import {
   playerVelocity,
   playerDirection
 } from '../player/player';
+import { bunnyhop } from './commands/settingsHandler';
 import { camera } from '../player/player';
 import { developerConsole } from '../gui/developerConsole';
+import _ from 'lodash';
 
 const keyStates: any = {};
+let spaceIsPressed: boolean = false;
+let canJump: boolean = false;
 
 export const playerKeyboardControls = (deltaTime: number): void => {
   if (developerConsole.isVisible) return;
@@ -33,7 +37,8 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   }
 
   if (playerOnFloor) {
-    if (keyStates['Space']) {
+    // If we can jump OR if we are holding space and bunnyhop is on
+    if (canJump || (keyStates['Space'] && bunnyhop)) {
       playerVelocity.y = 15;
     }
   }
@@ -58,8 +63,41 @@ function getSideVector() {
 
 document.addEventListener('keydown', (event) => {
   keyStates[event.code] = true;
+
+  offsetJump.startDebounce(event.code);
 });
 
 document.addEventListener('keyup', (event) => {
   keyStates[event.code] = false;
+
+  offsetJump.setSpaceIsNotPressed(event.code);
 });
+
+// If we hit jump 50 milliseconds before we hit ground, we will automatically jump when player hits ground
+// We can later use this logic to increase players speed if user hits jump in the 50ms timeframe
+const jumpBeforeHittingFloor = () => {
+  function dontJump() {
+    canJump = false;
+  }
+
+  // Note: if framerate is low the canJump will become false before next frame is set,
+  // thus player will not be able to jump at all
+  const debounceJump = _.debounce(dontJump, 50);
+
+  return {
+    startDebounce(eventCode: string) {
+      if (spaceIsPressed || eventCode !== 'Space') return;
+
+      spaceIsPressed = true;
+      canJump = true;
+
+      debounceJump();
+    },
+    setSpaceIsNotPressed(eventCode: string) {
+      if (eventCode !== 'Space') return;
+      spaceIsPressed = false;
+    }
+  };
+};
+
+const offsetJump = jumpBeforeHittingFloor();

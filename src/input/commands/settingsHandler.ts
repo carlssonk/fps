@@ -7,6 +7,7 @@ export let fov: number = 90;
 export let fpsMax: number = 144;
 export let sensitivity: number = 2.5;
 export let gravity: number = 30;
+export let bunnyhop: 0 | 1 = 0;
 
 const settingsHandler = (): any => {
   // Set default/initial settings.
@@ -22,21 +23,36 @@ const settingsHandler = (): any => {
   // };
 
   return {
-    // get fpsMax() {
-    //   return fpsMax;
-    // },
+    // FPS MAX
+    get fpsMax() {
+      return fpsMax;
+    },
     set fpsMax(value: number) {
       gameLoop.fps = fpsMax = value;
     },
-    // get fov() {
-    //   return fov;
-    // },
+
+    // FOV
+    get fov() {
+      return fov;
+    },
     set fov(value: number) {
       player.fov = fov = value;
     },
 
+    // SENSITIVITY
+    get sensitivity() {
+      return sensitivity;
+    },
     set sensitivity(value: number) {
       sensitivity = value;
+    },
+
+    // BUNNYHOP
+    get bunnyhop() {
+      return bunnyhop;
+    },
+    set bunnyhop(value: 1 | 0) {
+      bunnyhop = value;
     },
 
     attachConsole(): void {
@@ -50,7 +66,8 @@ const handleSettingsFromConsole = (): void => {
   const commands: any = {
     fps_max: (value: number) => callSetter('fpsMax', value),
     fov: (value: number) => callSetter('fov', value),
-    sensitivity: (value: number) => callSetter('sensitivity', value)
+    sensitivity: (value: number) => callSetter('sensitivity', value),
+    bunnyhop: (value: number) => callSetter('bunnyhop', value)
   };
 
   // Call a setter defined in out settings function.
