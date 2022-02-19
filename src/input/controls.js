@@ -1,8 +1,10 @@
 import { playerOnFloor, keyStates, playerVelocity, camera, playerDirection } from "../index";
+import { developerConsole } from "../gui/developerConsole";
 
 
 export const controls = (deltaTime) => {
 
+  if (developerConsole.isVisible) return
 
   // gives a bit of air control
   const speedDelta = deltaTime * (playerOnFloor ? 100 : 20);

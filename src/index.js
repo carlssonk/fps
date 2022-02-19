@@ -38,6 +38,11 @@ import { createGameLoop } from "./utils"
 import { toggleConsole } from "./input/toggleConsole"
 toggleConsole();
 
+// import { menu } from "./gui/menu";
+// menu();
+
+
+
 
 // VARIABLES
 let fov = 70;
@@ -134,12 +139,12 @@ export let playerOnFloor = false;
 export const setPlayerOnFloor = (value) => playerOnFloor = value;
 
 
-export let mouseTime = 0;
-export const setMouseTime = (value) => mouseTime = value;
+// export let mouseTime = 0;
+// export const setMouseTime = (value) => mouseTime = value;
 
 export const keyStates = {};
 
-import { throwBall } from "./player/throwBall"
+// wimport { throwBall } from "./player/throwBall"
 
 document.addEventListener('keydown', (event) => {
 
@@ -155,17 +160,17 @@ document.addEventListener('keyup', (event) => {
 
 document.addEventListener('mousedown', () => {
 
-  // document.body.requestPointerLock();
+  document.body.requestPointerLock();
 
-  mouseTime = performance.now();
+  // mouseTime = performance.now();
 
-});
+}, { once: true });
 
-document.addEventListener('mouseup', () => {
+// document.addEventListener('mouseup', () => {
 
-  if (document.pointerLockElement !== null) throwBall();
+//   if (document.pointerLockElement !== null) throwBall();
 
-});
+// });
 
 
 
@@ -203,7 +208,7 @@ const myGameLoop = (deltaTime) => {
 }
 
 // Create an object that gives us useful setters and getters
-const gameLoop = createGameLoop(myGameLoop)
+export const gameLoop = createGameLoop(myGameLoop)
 
 // Infinite looper
 function animate(deltaTime) {

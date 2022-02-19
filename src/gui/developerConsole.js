@@ -1,47 +1,109 @@
 import "../styles/console.css"
 import { waitForElement } from "../utils"
+import { settings } from "../input/commands/settingsHandler"
 
 const GUI = document.querySelector("#gui")
 
-
-export const developerConsole = async () => {
+const developerConsoleHandler = () => {
 
   const DOM = /*html*/`
-    <div class="console">
+    <div class="console" style="display: none;">
       <div class="console__dragBar"><span>Console</span><span class="console__exit"></span></div>
       <ul class="console__list">
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
-        <li>4</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
-        <li>5</li>
+        <li>Type !help to list all commands</li>
       </ul>
-      <div class="console__inputContainer">
-        <input class="console__input" type="text">
+      <form class="console__inputContainer">
+        <input class="console__input" type="text" spellcheck="false">
         <button class="console__button">Submit</button>
-      </div>
+      </form>
     </div>
   `
-  GUI.innerHTML = DOM
+  GUI.insertAdjacentHTML("beforeend", DOM)
 
-  // Always wait for a node right after inserting it to the dom
-  const consoleNode = await waitForElement(".console")
-  const dragNode = document.querySelector(".console__dragBar")
+  // Attach methods that are dependant on this DOM tree.
+  attachDependencies()
 
-  handleDrag(consoleNode, dragNode)
+  // State
+  let isVisible = false;
+
+  return {
+
+    get isVisible() {
+      return isVisible
+    },
+    get exitNode() {
+      return document.querySelector(".console__exit")
+    },
+    get inputNode() {
+      return document.querySelector(".console__input")
+    },
+    get buttonNode() {
+      return document.querySelector(".console__button")
+    },
+    get listNode() {
+      return document.querySelector(".console__list")
+    },
+    get formNode() {
+      return document.querySelector(".console__inputContainer")
+    },
+
+    toggle() {
+
+      if (isVisible) {
+        hideConsole()
+      } else {
+        document.querySelector(".console").style.display = "";
+        document.exitPointerLock();
+
+        document.querySelector(".console__input").blur();
+      }
+
+      isVisible = !isVisible
+
+    },
+
+    exit() {
+
+      hideConsole();
+      isVisible = false;
+
+    },
+
+    clearInput() {
+
+      document.querySelector(".console__input").value = "";
+      document.querySelector(".console__input").focus();
+
+    }
+
+  }
+
 }
 
+const hideConsole = () => {
+  document.querySelector(".console").style.display = "none";
+  document.body.requestPointerLock();
+}
+
+
+const attachDependencies = async () => {
+  // Wait for tree to be available
+  await waitForElement(".console");
+
+  // Invoke methods now that the nodes are available
+  handleDrag(document.querySelector(".console"), document.querySelector(".console__dragBar"))
+  settings.attachConsole();
+
+}
+
+// const attachDragHandler = async (rootNodeSelector, dragNodeSelector) => {
+//   // Always wait for a node right after inserting it to the dom
+//   const consoleNode = await waitForElement(rootNodeSelector)
+//   const dragNode = document.querySelector(dragNodeSelector)
+
+//   handleDrag(consoleNode, dragNode)
+
+// }
 
 const handleDrag = (element, dragBar) => {
   // Make the DIV element draggable:
@@ -85,3 +147,4 @@ const handleDrag = (element, dragBar) => {
   }
 }
 
+export const developerConsole = developerConsoleHandler();

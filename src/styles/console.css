@@ -46,6 +46,9 @@
 .console__exit::before {
   content: "\f00d";
 }
+.console__exit:hover {
+  background: rgb(60, 60, 60);
+}
 
 .console__list {
   padding: 12px;
@@ -64,6 +67,7 @@
   align-items: center;
   bottom: 0;
   height: 60px;
+  min-height: 60px;
   width: 100%;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 }
@@ -92,7 +96,10 @@
   margin-left: 12px;
   cursor: pointer;
 }
+.console__button:hover {
+  background: rgb(60, 60, 60);
+}
 .console__button:active {
   transform: scale3d(0.96,0.96,0.96);
-  background: rgb(60, 60, 60);
+
 }
