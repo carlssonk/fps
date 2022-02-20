@@ -6,16 +6,24 @@
 }
 
 .console {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  --dark-gray: rgb(40, 40, 40);
+  --medium-gray: rgb(60, 60, 60);
+  --light-gray: rgb(80, 80, 80);
+  --dark-yellow: rgba(255, 200, 0, 0.5);
+  --light-yellow: rgba(255, 200, 0, 1);
+}
+
+.console__wrapper {
   width: 800px;
   height: 400px;
   min-width: 300px;
   min-height: 150px;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   resize: both;
-  background: rgb(40, 40, 40);
+  background: var(--dark-gray);
   border-radius: 4px;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -23,7 +31,7 @@
 .console__dragBar {
   width: 100%;
   min-height: 30px;
-  background: rgb(80, 80, 80);
+  background: var(--light-gray);
   z-index: 10;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -46,7 +54,7 @@
   content: '\f00d';
 }
 .console__exit:hover {
-  background: rgb(60, 60, 60);
+  background: var(--medium-gray);
 }
 
 .console__list {
@@ -76,13 +84,13 @@
   height: 30px;
   border: none;
   outline: none;
-  background: rgb(80, 80, 80);
+  background: var(--light-gray);
   color: rgba(255, 255, 255, 0.9);
   padding: 0 12px;
-  outline: 1px solid rgba(255, 200, 0, 0.5);
+  outline: 1px solid var(--dark-yellow);
 }
 .console__input:focus {
-  outline: 1px solid rgba(255, 200, 0, 1);
+  outline: 1px solid var(--light-yellow);
 }
 
 .console__button {
@@ -90,14 +98,41 @@
   height: 30px;
   border: none;
   outline: none;
-  background: rgb(80, 80, 80);
+  background: var(--light-gray);
   color: rgba(255, 255, 255, 0.9);
   margin-left: 12px;
   cursor: pointer;
 }
 .console__button:hover {
-  background: rgb(60, 60, 60);
+  background: var(--medium-gray);
 }
 .console__button:active {
   transform: scale3d(0.96, 0.96, 0.96);
+}
+
+.console__matches {
+  position: absolute;
+  list-style-type: none;
+  background: var(--light-gray);
+  bottom: 14px;
+  left: 11px;
+  transform: translateY(100%);
+}
+
+.console__matchesButton {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  border: none;
+  outline: none;
+  background: none;
+  color: inherit;
+  padding: 2px 12px;
+}
+
+.console__matchesButton:focus {
+  background: var(--dark-yellow);
+}
+.console__matchesButton:hover {
+  background: var(--dark-yellow);
 }

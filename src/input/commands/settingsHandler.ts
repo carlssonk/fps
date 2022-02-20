@@ -67,6 +67,8 @@ const settingsHandler = (): any => {
 };
 
 const handleSettingsFromConsole = (): void => {
+  // Validate values
+  // This obj is also used to compare user input to find matches
   const validateValue: CommandsInterface = {
     fps_max: (value: string) => validateInteger(value, 0, 9999),
     fov: (value: string) => validateInteger(value, 1, 170),
@@ -86,9 +88,6 @@ const handleSettingsFromConsole = (): void => {
     const command: string = text.slice(0, spaceIndex);
     const value: string = text.slice(spaceIndex + 1);
 
-    console.log(command);
-    console.log(value);
-
     // Check if command exists
     if (typeof settings[command] === 'number') {
       const validateFunc: any =
@@ -101,7 +100,11 @@ const handleSettingsFromConsole = (): void => {
         return sendCommandStyle(`Usage: ${command} [number]`);
       }
 
+      // Update setting
       settings[command] = validatedValue;
+      // Update array of all settings
+      commandsArray = Object.entries(settings);
+      // Send command to console
       sendCommandStyle(
         `${command} <span style="color: #7866ff;">${validatedValue}</span>`
       );
@@ -114,15 +117,55 @@ const handleSettingsFromConsole = (): void => {
     }
   });
 
-  console.log(input);
-  input.addEventListener('change', (event) => {
-    console.log(event);
+  const matchesContainer = developerConsole.matchesNode as HTMLDivElement;
+
+  // Listen for keystrokes
+  input.addEventListener('input', (event) => {
+    const element = event.target as HTMLInputElement;
+    const inputValue = element?.value;
+
+    if (inputValue.length === 0) return (matchesContainer.innerHTML = '');
+
+    // Find commands that matches current inputValue
+    const matches = commandsArray.filter((item) => {
+      const value = inputValue.toLocaleLowerCase().trim();
+
+      return item[0] in validateValue && item[0].includes(value);
+    });
+
+    // List out available commands that matcehs current inputValue
+    matchesContainer.innerHTML = `
+      ${matches
+        .map(
+          (item) =>
+            `<button tabindex="0" class="console__matchesButton" data-key=${item[0]}>${item[0]} ${item[1]}</button>`
+        )
+        .join('')}
+    `;
+  });
+
+  // When user focuses a command from the list
+  matchesContainer.addEventListener('focusin', function (event) {
+    const element = event.target as HTMLInputElement;
+    const command = element.dataset.key;
+
+    input.value = `${command} `;
+  });
+
+  // When user clicks a command from the list
+  matchesContainer.addEventListener('click', function (event) {
+    const element = event.target as HTMLInputElement;
+
+    input.value = element.innerText;
+    input.focus();
+    matchesContainer.innerHTML = '';
   });
 
   function commandNotFound(command: string) {
     sendCommandStyle(`Unknown command "${command}"`);
   }
 
+  // Send text to console
   function sendCommandStyle(text: string) {
     input.value = '';
 
@@ -139,4 +182,4 @@ const handleSettingsFromConsole = (): void => {
 // export this variable so we can use in other scripts to see and change our settings.
 export const settings = settingsHandler();
 
-console.log(Object.entries(settings));
+let commandsArray = Object.entries(settings);

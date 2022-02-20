@@ -7,14 +7,17 @@ const GUI = document.querySelector('#gui');
 const developerConsoleHandler = () => {
   const DOM = /*html*/ `
     <div class="console" style="display: none;">
-      <div class="console__dragBar"><span>Console</span><span class="console__exit"></span></div>
-      <ul class="console__list">
-        <li>Type !help to list all commands</li>
-      </ul>
-      <form class="console__inputContainer">
-        <input class="console__input" type="text" spellcheck="false">
-        <button class="console__button">Submit</button>
-      </form>
+      <div class="console__wrapper">
+        <div class="console__dragBar"><span>Console</span><span class="console__exit"></span></div>
+        <ul class="console__list">
+          <li>Type !help to list all commands</li>
+        </ul>
+        <form class="console__inputContainer">
+          <input class="console__input" type="text" spellcheck="false">
+          <button tabindex="-1" class="console__button">Submit</button>
+        </form>
+        <div class="console__matches"></div>
+      </div>
     </div>
   `;
   GUI?.insertAdjacentHTML('beforeend', DOM);
@@ -43,6 +46,9 @@ const developerConsoleHandler = () => {
     },
     get formNode() {
       return document.querySelector('.console__inputContainer');
+    },
+    get matchesNode() {
+      return document.querySelector('.console__matches');
     },
 
     toggle() {
@@ -73,6 +79,8 @@ const developerConsoleHandler = () => {
 };
 
 const hideConsole = () => {
+  (document.querySelector('.console__matches') as HTMLDivElement).innerHTML =
+    '';
   (document.querySelector('.console') as HTMLDivElement).style.display = 'none';
   document.body.requestPointerLock();
 };
