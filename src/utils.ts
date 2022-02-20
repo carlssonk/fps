@@ -1,4 +1,4 @@
-import { fpsMax } from './input/commands/settingsHandler';
+import { fps_max } from './input/commands/settingsHandler';
 
 export const createGameLoop = (func: (deltaTime: number) => void) => {
   let targetFps: number = 0;
@@ -13,7 +13,7 @@ export const createGameLoop = (func: (deltaTime: number) => void) => {
     fpsInterval = 1000 / targetFps;
   }
 
-  updateFps(fpsMax);
+  updateFps(fps_max);
 
   return {
     set fps(value: number) {
