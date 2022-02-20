@@ -1,6 +1,6 @@
 import {
+  player,
   playerOnFloor,
-  setPlayerOnFloor,
   playerVelocity,
   playerCollider,
   camera
@@ -30,11 +30,14 @@ export const updatePlayer = (deltaTime: number) => {
 
 function playerCollisions() {
   const result = worldOctree.capsuleIntersect(playerCollider);
+  // console.log(result);
 
-  setPlayerOnFloor(false);
+  player.playerOnFloor = false;
 
   if (result) {
-    setPlayerOnFloor(result.normal.y > 0);
+    player.playerOnFloor = result.normal.y > 0;
+
+    // console.log(result.normal.y > 0);
 
     if (!playerOnFloor) {
       playerVelocity.addScaledVector(
