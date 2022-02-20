@@ -73,7 +73,8 @@ function animate(deltaTime: number) {
 }
 
 // Load model
-import WORLD from './models/collision-world.glb';
-mapLoader(WORLD, () => {
+// import WORLD from './models/collision-world.glb';
+import AimMap from './models/aim-map-compressed.glb';
+mapLoader(AimMap, () => {
   animate(0);
 });
