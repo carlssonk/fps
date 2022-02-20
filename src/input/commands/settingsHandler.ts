@@ -2,6 +2,8 @@ import { developerConsole } from '../../gui/developerConsole';
 import { gameLoop } from '../../index';
 import { player } from '../../player/player';
 import { validateInteger } from './validateInteger';
+import { validateFloat } from './validateFloat';
+import { validateBoolean } from './validateBoolean';
 
 // Setting Variables
 export let fov: number = 90;
@@ -10,20 +12,20 @@ export let sensitivity: number = 2.5;
 export let gravity: number = 30;
 export let bunnyhop: 0 | 1 = 0;
 
+interface SettingMethodsInterface {
+  fps_max: number | ((value: string) => number | false);
+  fov: number | ((value: string) => number | false);
+  sensitivity: number | ((value: string) => number | false);
+  bunnyhop: number | ((value: string) => number | false);
+  attachConsole: () => void;
+}
+
+// Ignore "attachConsole" since this is not a valid command
+type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
+type CommandsInterface = Omit<SettingMethodsInterface, 'attachConsole'>;
+
 const settingsHandler = (): any => {
-  // Set default/initial settings.
-  // let volume = 1;
-
-  // let keybindings = {
-  //   jump: "Space",
-  //   mForward: "KeyW",
-  //   mLeft: "KeyA",
-  //   mRight: "KeyD",
-  //   mBackward: "KeyS",
-  //   use: "F"
-  // };
-
-  return {
+  const commands: SettingMethodsInterface = {
     // FPS MAX
     get fps_max() {
       return fps_max;
@@ -60,11 +62,16 @@ const settingsHandler = (): any => {
       handleSettingsFromConsole();
     }
   };
+
+  return commands;
 };
 
 const handleSettingsFromConsole = (): void => {
-  const validateValue: any = {
-    fps_max: (value: string) => validateInteger(value, 0, 999)
+  const validateValue: CommandsInterface = {
+    fps_max: (value: string) => validateInteger(value, 0, 9999),
+    fov: (value: string) => validateInteger(value, 1, 170),
+    sensitivity: (value: string) => validateFloat(value, 0, 999),
+    bunnyhop: (value: string) => validateBoolean(value)
   };
 
   // Dom.
@@ -73,40 +80,47 @@ const handleSettingsFromConsole = (): void => {
   // Submit a console command.
   button?.addEventListener('click', () => {
     // extract command and value from input string
-    const text = input.value;
+    const text: string = input.value;
 
-    const spaceIndex = text.indexOf(' ');
-    const command = text.slice(0, spaceIndex);
-    const value = text.slice(spaceIndex + 1);
+    const spaceIndex: number = text.indexOf(' ');
+    const command: string = text.slice(0, spaceIndex);
+    const value: string = text.slice(spaceIndex + 1);
 
     console.log(command);
     console.log(value);
 
-    // All values for modifing settings are numbers
+    // Check if command exists
     if (typeof settings[command] === 'number') {
-      const validateFunc = validateValue[command];
-      if (!validateFunc) return commandNotFound();
+      const validateFunc: any =
+        validateValue[command as keyof CommandsInterface];
 
       const validatedValue = validateFunc(value);
-      console.log(validatedValue);
-      if (
-        validatedValue === false ||
-        validatedValue === undefined ||
-        isNaN(validatedValue)
-      )
+
+      // If user typed wrong value
+      if (validatedValue === false || validatedValue === undefined) {
         return sendCommandStyle(`Usage: ${command} [number]`);
+      }
 
       settings[command] = validatedValue;
       sendCommandStyle(
         `${command} <span style="color: #7866ff;">${validatedValue}</span>`
       );
     } else {
-      commandNotFound();
+      // If user types command without a value
+      if (typeof settings[text] === 'number')
+        return sendCommandStyle(`Usage: ${text} [number]`);
+
+      commandNotFound(text);
     }
   });
 
-  function commandNotFound() {
-    sendCommandStyle('Command not found');
+  console.log(input);
+  input.addEventListener('change', (event) => {
+    console.log(event);
+  });
+
+  function commandNotFound(command: string) {
+    sendCommandStyle(`Unknown command "${command}"`);
   }
 
   function sendCommandStyle(text: string) {

@@ -1,7 +1,8 @@
 // Boolean in this case is 0 (false) or 1 (true)
-const bools = [0, 1];
-export const validateBoolean = (inputValue: string): number | boolean => {
+export const validateBoolean = (inputValue: string) => {
   const booleanize = Number(parseInt(inputValue));
 
-  return bools.includes(booleanize) ? booleanize : false;
+  if (typeof booleanize !== 'number' || isNaN(booleanize)) return false;
+
+  return booleanize > 0 ? 1 : 0;
 };
