@@ -1,8 +1,9 @@
+import { menu } from '../gui/menu';
 import { developerConsole } from '../gui/developerConsole';
 
 export const consoleEventListeners = () => {
   document.addEventListener('keydown', (event) => {
-    if (event.code === 'Backquote') {
+    if (event.code === 'Backquote' && !menu.isVisible) {
       developerConsole.toggle();
     }
   });

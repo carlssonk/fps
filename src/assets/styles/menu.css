@@ -1,7 +1,32 @@
 .menu {
-  position: absolute;
-  inset: 0;
+  background: rgb(0, 0, 0, 0.8);
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 100;
+}
+
+.menu__buttonContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 200px;
+}
+
+.menu__button {
+  width: 100%;
+  height: 50px;
+  color: white;
+  background: transparent;
+  border: 4px solid var(--dark-yellow);
+  outline: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu__button:hover {
+  border-color: var(--light-yellow);
 }

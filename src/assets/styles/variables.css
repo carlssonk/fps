@@ -1,0 +1,7 @@
+:root {
+  --dark-gray: rgb(40, 40, 40);
+  --medium-gray: rgb(60, 60, 60);
+  --light-gray: rgb(80, 80, 80);
+  --dark-yellow: rgba(255, 200, 0, 0.5);
+  --light-yellow: rgba(255, 200, 0, 1);
+}

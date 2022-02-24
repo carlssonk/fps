@@ -31,24 +31,24 @@ import { playerMouseMove } from './input/playerMouseMove';
 initGui();
 playerMouseMove();
 
-// PointerLockEvent
-document.addEventListener(
-  'mousedown',
-  () => {
-    document.body.requestPointerLock();
+// // PointerLockEvent
+// document.addEventListener(
+//   'mousedown',
+//   () => {
+//     document.body.requestPointerLock();
 
-    // We need to explicitly set player position and player height when user interacts with page
+//     // We need to explicitly set player position and player height when user interacts with page
 
-    // z-axis position
-    playerCollider.start.z = -5;
-    playerCollider.end.z = -5;
-    // y-axis position
-    playerCollider.start.y = 2;
-    // player height (relative to start.y)
-    playerCollider.end.y = 3;
-  },
-  { once: true }
-);
+//     // z-axis position
+//     playerCollider.start.z = -5;
+//     playerCollider.end.z = -5;
+//     // y-axis position
+//     playerCollider.start.y = 2;
+//     // player height (relative to start.y)
+//     playerCollider.end.y = 3;
+//   },
+//   { once: true }
+// );
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;

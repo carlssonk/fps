@@ -4,6 +4,8 @@ import * as THREE from 'three';
 
 const _PI_2 = Math.PI / 2;
 
+export const mouseTime = 0;
+
 export const playerMouseMove = (): void => {
   // Mouse movement
   document.body.addEventListener('mousemove', (event) => {
