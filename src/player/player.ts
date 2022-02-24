@@ -14,11 +14,12 @@ export const playerCollider = new Capsule(
   new THREE.Vector3(0, 1, 0),
   0.35
 );
+
 export const playerVelocity = new THREE.Vector3();
+
 export const playerDirection = new THREE.Vector3();
 
 export let playerOnFloor = false;
-// export const setPlayerOnFloor = (value: boolean) => (playerOnFloor = value);
 
 const playerHandler = () => {
   // Player

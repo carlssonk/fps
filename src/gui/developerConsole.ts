@@ -1,4 +1,4 @@
-import '../styles/console.css';
+import '../assets/styles/console.css';
 import { waitForElement } from '../utils';
 import { settings } from '../input/commands/settingsHandler';
 
