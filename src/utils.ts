@@ -62,3 +62,5 @@ export const waitForElement = (selector: string) =>
       subtree: true
     });
   });
+
+export const sleep = (ms: number) => new Promise((res) => setTimeout(res, ms));
