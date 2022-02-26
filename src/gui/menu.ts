@@ -1,6 +1,14 @@
 import '../assets/styles/menu.css';
 import { developerConsole } from '../gui/developerConsole';
-import { sleep } from '../utils';
+import { sleep, setPlayerPosition } from '../utils';
+import {
+  hasJoinedMap,
+  player,
+  PLAYER_HEIGHT,
+  PLAYER_SPAWN_POS,
+  playerCollider,
+  camera
+} from '../player/player';
 // import { waitForElement } from "../utils"
 
 const GUI = document.querySelector('#gui') as HTMLDivElement;
@@ -28,13 +36,10 @@ const menuHandler = () => {
     },
 
     async hide() {
-      //     // z-axis position
-      //     playerCollider.start.z = -5;
-      //     playerCollider.end.z = -5;
-      //     // y-axis position
-      //     playerCollider.start.y = 2;
-      //     // player height (relative to start.y)
-      //     playerCollider.end.y = 3;
+      if (!hasJoinedMap) {
+        setPlayerPosition([-3, -2, 11], 0);
+        player.hasJoinedMap = true;
+      }
 
       if (!developerConsole.isVisible) {
         document.body.requestPointerLock();

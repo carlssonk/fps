@@ -1,0 +1,13 @@
+.crosshair {
+  width: 6px;
+  height: 6px;
+  background: rgb(0, 255, 0);
+  border: 2px solid black;
+  border-radius: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+}
