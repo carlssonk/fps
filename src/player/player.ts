@@ -3,7 +3,7 @@ import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 import { fov } from '../input/commands/settingsHandler';
 
 export let hasJoinedMap = false;
-export const PLAYER_HEIGHT = 0.9;
+export const PLAYER_HEIGHT = 0.92;
 export const PLAYER_SPAWN_POS = [0, 0, -4];
 
 export const camera = new THREE.PerspectiveCamera(

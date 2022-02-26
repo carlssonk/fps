@@ -3,7 +3,7 @@ import {
   playerVelocity,
   playerDirection
 } from '../player/player';
-import { bunnyhop } from './commands/settingsHandler';
+import { bunnyhop, damping } from './commands/settingsHandler';
 import { camera } from '../player/player';
 import { developerConsole } from '../gui/developerConsole';
 import _ from 'lodash';
@@ -12,15 +12,19 @@ import { menu } from '../gui/menu';
 const keyStates: any = {};
 let spaceIsPressed: boolean = false;
 let canJump: boolean = false;
+const JUMP_HEIGHT = 1;
 
 export const playerKeyboardControls = (deltaTime: number): void => {
   if (developerConsole.isVisible) return;
   if (menu.isVisible) return;
 
-  const walkSpeed = keyStates['ShiftLeft'] ? 0.5 : 1;
+  const walkSpeed = 5 * damping;
+  const walkThrottle = keyStates['ShiftLeft'] ? 0.5 : 1;
 
   // gives a bit of air control
-  const speedDelta = deltaTime * (playerOnFloor ? 100 * walkSpeed : 20);
+  // const speedDelta = deltaTime * (playerOnFloor ? 50 * walkSpeed : 20);
+  let speedDelta = deltaTime * (walkSpeed * walkThrottle);
+  if (!playerOnFloor) speedDelta *= 0.2;
 
   if (keyStates['KeyW']) {
     playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
@@ -41,7 +45,7 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   if (playerOnFloor) {
     // If we can jump OR if we are holding space and bunnyhop is on
     if (canJump || (keyStates['Space'] && bunnyhop)) {
-      playerVelocity.y = 15;
+      playerVelocity.y = JUMP_HEIGHT * damping;
     }
   }
 };

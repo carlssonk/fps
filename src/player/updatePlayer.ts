@@ -5,16 +5,14 @@ import {
   playerCollider,
   camera
 } from './player';
-import { gravity } from '../input/commands/settingsHandler';
+import {
+  gravity,
+  damping as dampingValue
+} from '../input/commands/settingsHandler';
 import { worldOctree } from '../scene/mapLoader';
 
-// let frames = 0;
-
 export const updatePlayer = (deltaTime: number) => {
-  // console.log(playerCollider.start.z);
-  // console.log(playerCollider.end.z);
-
-  let damping = Math.exp(-20 * deltaTime) - 1;
+  let damping = Math.exp(-dampingValue * deltaTime) - 1;
 
   if (!playerOnFloor) {
     playerVelocity.y -= gravity * deltaTime;
@@ -24,14 +22,6 @@ export const updatePlayer = (deltaTime: number) => {
   }
 
   playerVelocity.addScaledVector(playerVelocity, damping);
-
-  // frames++;
-
-  // if (frames < 100) {
-  //   playerVelocity.set(0, 0, 0);
-  //   playerCollider.end.z = -5;
-  //   camera.position.z = -5;
-  // }
 
   const deltaPosition = playerVelocity.clone().multiplyScalar(deltaTime);
 
@@ -44,14 +34,11 @@ export const updatePlayer = (deltaTime: number) => {
 
 function playerCollisions() {
   const result = worldOctree.capsuleIntersect(playerCollider);
-  // console.log(result);
 
   player.playerOnFloor = false;
 
   if (result) {
     player.playerOnFloor = result.normal.y > 0;
-
-    // console.log(result.normal.y > 0);
 
     if (!playerOnFloor) {
       playerVelocity.addScaledVector(
