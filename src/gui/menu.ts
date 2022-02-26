@@ -1,38 +1,65 @@
-import "../styles/menu.css"
+import '../assets/styles/menu.css';
+import { developerConsole } from '../gui/developerConsole';
+import { sleep, setPlayerPosition } from '../utils';
+import {
+  hasJoinedMap,
+  player,
+  PLAYER_HEIGHT,
+  PLAYER_SPAWN_POS,
+  playerCollider,
+  camera
+} from '../player/player';
 // import { waitForElement } from "../utils"
 
-const GUI = document.querySelector("#gui")
+const GUI = document.querySelector('#gui') as HTMLDivElement;
 
-export const menu = () => {
-
-  const DOM = /*html*/`
-    <div class="menu" style="display: none;">
-      menu
+const menuHandler = () => {
+  const DOM = /*html*/ `
+    <div class="menu">
+      <div class="menu__buttonContainer">
+        <button class="menu__button menu__resume">Resume</button>
+      </div>
     </div>
-  `
-  // GUI.innerHTML = DOM
-
-  // attachDragHandler(".console", ".console__dragBar")
+  `;
+  GUI.insertAdjacentHTML('beforeend', DOM);
 
   // State
-  // let isVisible = false;
+  let isVisible = true;
 
-  // return {
+  return {
+    get isVisible() {
+      return isVisible;
+    },
 
-  //   toggle() {
+    get resumeNode() {
+      return document.querySelector('.menu__resume');
+    },
 
-  //     if (isVisible) {
-  //       document.querySelector(".console").style.display = "none";
-  //       document.body.requestPointerLock();
-  //     } else {
-  //       document.querySelector(".console").style.display = "";
-  //       document.exitPointerLock();
-  //     }
+    async hide() {
+      if (!hasJoinedMap) {
+        setPlayerPosition([-3, -2, 11], 0);
+        player.hasJoinedMap = true;
+      }
 
-  //     isVisible = !isVisible
+      if (!developerConsole.isVisible) {
+        document.body.requestPointerLock();
 
-  //   },
+        // Sleep here because requestPointerLock is async, and we want to see if the request got through.
+        // We only need 0 milliseconds because of the JavaScript Event Loop, if you know you know ;)
+        await sleep(0);
+        if (document.pointerLockElement !== document.body) return;
+      }
 
-  // }
+      (document.querySelector('.menu') as HTMLDivElement).style.display =
+        'none';
+      isVisible = false;
+    },
 
-}
+    show() {
+      (document.querySelector('.menu') as HTMLDivElement).style.display = '';
+      isVisible = true;
+    }
+  };
+};
+
+export const menu = menuHandler();

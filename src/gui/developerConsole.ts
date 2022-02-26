@@ -1,8 +1,8 @@
-import '../styles/console.css';
+import '../assets/styles/console.css';
 import { waitForElement } from '../utils';
 import { settings } from '../input/commands/settingsHandler';
 
-const GUI = document.querySelector('#gui');
+const GUI = document.querySelector('#gui') as HTMLDivElement;
 
 const developerConsoleHandler = () => {
   const DOM = /*html*/ `
@@ -20,7 +20,7 @@ const developerConsoleHandler = () => {
       </div>
     </div>
   `;
-  GUI?.insertAdjacentHTML('beforeend', DOM);
+  GUI.insertAdjacentHTML('beforeend', DOM);
 
   // Attach methods that are dependant on this DOM tree.
   attachDependencies();

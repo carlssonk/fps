@@ -8,7 +8,12 @@ import {
 import { gravity } from '../input/commands/settingsHandler';
 import { worldOctree } from '../scene/mapLoader';
 
+// let frames = 0;
+
 export const updatePlayer = (deltaTime: number) => {
+  // console.log(playerCollider.start.z);
+  // console.log(playerCollider.end.z);
+
   let damping = Math.exp(-20 * deltaTime) - 1;
 
   if (!playerOnFloor) {
@@ -20,7 +25,16 @@ export const updatePlayer = (deltaTime: number) => {
 
   playerVelocity.addScaledVector(playerVelocity, damping);
 
+  // frames++;
+
+  // if (frames < 100) {
+  //   playerVelocity.set(0, 0, 0);
+  //   playerCollider.end.z = -5;
+  //   camera.position.z = -5;
+  // }
+
   const deltaPosition = playerVelocity.clone().multiplyScalar(deltaTime);
+
   playerCollider.translate(deltaPosition);
 
   playerCollisions();

@@ -7,6 +7,7 @@ import { bunnyhop } from './commands/settingsHandler';
 import { camera } from '../player/player';
 import { developerConsole } from '../gui/developerConsole';
 import _ from 'lodash';
+import { menu } from '../gui/menu';
 
 const keyStates: any = {};
 let spaceIsPressed: boolean = false;
@@ -14,6 +15,7 @@ let canJump: boolean = false;
 
 export const playerKeyboardControls = (deltaTime: number): void => {
   if (developerConsole.isVisible) return;
+  if (menu.isVisible) return;
 
   const walkSpeed = keyStates['ShiftLeft'] ? 0.5 : 1;
 
