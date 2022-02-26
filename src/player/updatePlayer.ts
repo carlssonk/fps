@@ -17,8 +17,8 @@ export const updatePlayer = (deltaTime: number) => {
   if (!playerOnFloor) {
     playerVelocity.y -= gravity * deltaTime;
 
-    // small air resistance
-    damping *= 0.2;
+    // Air resistence y
+    damping *= 0.02;
   }
 
   playerVelocity.addScaledVector(playerVelocity, damping);

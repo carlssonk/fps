@@ -12,7 +12,7 @@ import { menu } from '../gui/menu';
 const keyStates: any = {};
 let spaceIsPressed: boolean = false;
 let canJump: boolean = false;
-const JUMP_HEIGHT = 1;
+export const JUMP_HEIGHT = 6.2;
 
 export const playerKeyboardControls = (deltaTime: number): void => {
   if (developerConsole.isVisible) return;
@@ -24,7 +24,8 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   // gives a bit of air control
   // const speedDelta = deltaTime * (playerOnFloor ? 50 * walkSpeed : 20);
   let speedDelta = deltaTime * (walkSpeed * walkThrottle);
-  if (!playerOnFloor) speedDelta *= 0.2;
+  // Air resistance z,x
+  if (!playerOnFloor) speedDelta *= 0.02;
 
   if (keyStates['KeyW']) {
     playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
@@ -45,7 +46,7 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   if (playerOnFloor) {
     // If we can jump OR if we are holding space and bunnyhop is on
     if (canJump || (keyStates['Space'] && bunnyhop)) {
-      playerVelocity.y = JUMP_HEIGHT * damping;
+      playerVelocity.y = JUMP_HEIGHT;
     }
   }
 };

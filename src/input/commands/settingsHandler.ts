@@ -9,7 +9,7 @@ import { validateBoolean } from './validateBoolean';
 export let fov: number = 70;
 export let fps_max: number = 144;
 export let sensitivity: number = 2.5;
-export let gravity: number = 30;
+export let gravity: number = 15;
 export let bunnyhop: 0 | 1 = 0;
 export let damping: number = 10;
 
@@ -19,6 +19,7 @@ interface SettingMethodsInterface {
   sensitivity: number | ((value: string) => number | false);
   bunnyhop: number | ((value: string) => number | false);
   damping: number | ((value: string) => number | false);
+  gravity: number | ((value: string) => number | false);
   attachConsole: () => void;
 }
 
@@ -68,6 +69,14 @@ const settingsHandler = (): any => {
       damping = value;
     },
 
+    // GRAVITY
+    get gravity() {
+      return gravity;
+    },
+    set gravity(value: number) {
+      gravity = value;
+    },
+
     attachConsole(): void {
       handleSettingsFromConsole();
     }
@@ -84,7 +93,8 @@ const handleSettingsFromConsole = (): void => {
     fov: (value: string) => validateInteger(value, 1, 170),
     sensitivity: (value: string) => validateFloat(value, 0, 999),
     bunnyhop: (value: string) => validateBoolean(value),
-    damping: (value: string) => validateFloat(value, 0, 999)
+    damping: (value: string) => validateFloat(value, 0, 999),
+    gravity: (value: string) => validateFloat(value, -30, 9999)
   };
 
   // Dom.
