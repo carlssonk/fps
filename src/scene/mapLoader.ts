@@ -11,6 +11,8 @@ export const mapLoader = (map: string, func: () => void) => {
   loader.load(map, (gltf) => {
     scene.add(gltf.scene);
 
+    // gltf.scene.renderOrder = -1;
+
     worldOctree.fromGraphNode(gltf.scene);
 
     gltf.scene.traverse((child) => {

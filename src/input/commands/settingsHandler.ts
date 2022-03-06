@@ -11,7 +11,7 @@ export let fps_max: number = 144;
 export let sensitivity: number = 2.5;
 export let gravity: number = 15;
 export let bunnyhop: 0 | 1 = 0;
-export let damping: number = 10;
+export let damping: number = 15;
 
 interface SettingMethodsInterface {
   fps_max: number | ((value: string) => number | false);

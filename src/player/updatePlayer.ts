@@ -5,11 +5,13 @@ import {
   playerCollider,
   camera
 } from './player';
+import { gameLoop } from '../index';
 import {
   gravity,
   damping as dampingValue
 } from '../input/commands/settingsHandler';
-import { worldOctree } from '../scene/mapLoader';
+import { worldOctree } from '../scene/loadAsset';
+import { assets } from '../game';
 
 export const updatePlayer = (deltaTime: number) => {
   let damping = Math.exp(-dampingValue * deltaTime) - 1;
@@ -30,6 +32,9 @@ export const updatePlayer = (deltaTime: number) => {
   playerCollisions();
 
   camera.position.copy(playerCollider.end);
+
+  // Update gun movement
+  weaponMovement(deltaTime);
 };
 
 function playerCollisions() {
@@ -50,3 +55,25 @@ function playerCollisions() {
     playerCollider.translate(result.normal.multiplyScalar(result.depth));
   }
 }
+
+const weaponMovement = (deltaTime: number) => {
+  const avgVelocity = Math.abs(playerVelocity.x) + Math.abs(playerVelocity.z);
+  const offset = avgVelocity / 1000;
+  const weapon = assets['ak47'].scene;
+
+  // View offset
+  weapon.position.set(
+    weapon.defaultPosition.x + offset,
+    weapon.defaultPosition.y - offset,
+    weapon.defaultPosition.z + offset
+  );
+
+  // View bobbing
+  if (avgVelocity > 5) {
+    weapon.position.z =
+      weapon.position.z + Math.sin(gameLoop.elapsedTime / 75) / 500;
+  } else if (avgVelocity > 1) {
+    weapon.position.z =
+      weapon.position.z + Math.sin(gameLoop.elapsedTime / 150) / 500;
+  }
+};

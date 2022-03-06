@@ -1,13 +1,14 @@
 import '../assets/styles/menu.css';
 import { developerConsole } from '../gui/developerConsole';
 import { sleep, setPlayerPosition } from '../utils';
+import { assets } from '../game/index';
 import {
   hasJoinedMap,
-  player,
-  PLAYER_HEIGHT,
-  PLAYER_SPAWN_POS,
-  playerCollider,
-  camera
+  player
+  // PLAYER_HEIGHT,
+  // PLAYER_SPAWN_POS,
+  // playerCollider,
+  // camera
 } from '../player/player';
 // import { waitForElement } from "../utils"
 
@@ -37,6 +38,9 @@ const menuHandler = () => {
 
     async hide() {
       if (!hasJoinedMap) {
+        // Init player on map
+        assets['ak47'].draw();
+
         setPlayerPosition([-3, -2, 11], 0);
         player.hasJoinedMap = true;
       }

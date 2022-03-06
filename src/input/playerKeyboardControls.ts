@@ -27,6 +27,8 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   // Air resistance z,x
   if (!playerOnFloor) speedDelta *= 0.02;
 
+  if (isWalkingDiagonally()) speedDelta = speedDelta / 1.33;
+
   if (keyStates['KeyW']) {
     playerVelocity.add(getForwardVector().multiplyScalar(speedDelta));
   }
@@ -105,6 +107,15 @@ const jumpBeforeHittingFloor = () => {
       spaceIsPressed = false;
     }
   };
+};
+
+const isWalkingDiagonally = () => {
+  return (
+    (keyStates['KeyW'] && keyStates['KeyD']) ||
+    (keyStates['KeyD'] && keyStates['KeyS']) ||
+    (keyStates['KeyS'] && keyStates['KeyA']) ||
+    (keyStates['KeyA'] && keyStates['KeyW'])
+  );
 };
 
 const offsetJump = jumpBeforeHittingFloor();

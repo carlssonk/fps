@@ -32,6 +32,7 @@ function createRenderer() {
   const container = document.querySelector('#container');
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
+  renderer.autoClear = false;
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.shadowMap.enabled = true;
@@ -47,3 +48,5 @@ function createRenderer() {
 
 export const scene = createScene();
 export const renderer = createRenderer();
+export const sceneTop = new THREE.Scene();
+// export const sceneTop = null;
