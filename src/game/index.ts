@@ -2,6 +2,7 @@ import { loadAsset } from '../scene/loadAsset';
 import { animate } from '../index';
 import { assetLoader } from '../scene/assetLoader';
 import { weapons } from './weapons';
+import { player } from '../player/player';
 
 // Game logic in game/ folder
 // Game gui in gui/ folder
@@ -26,11 +27,13 @@ export let assets: any = {};
 
 // Load all your assets for your game
 import levelPath from '../assets/models/aim-map-compressed.glb';
+import armsPath from '../assets/models/arms.glb';
 import ak47Path from '../assets/models/ak47.glb';
 
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
+    { name: 'arms', path: armsPath, options: { addToScene: false } },
     { name: 'ak47', path: ak47Path, options: { addToScene: false } }
   ]);
 };
@@ -40,10 +43,11 @@ export const GAME = async () => {
   // Map
   assets = await ASSETS();
 
-  // Attach assets to handlers.
-  const ak47 = weapons.ak47(assets['ak47']);
+  // Attach arms and weapon to viewmodel
+  player.attachViewmodel(assets['arms'], assets['ak47']);
+  // Add animations to arms and weapons
+  weapons.addAnimations(assets['arms'], assets['ak47']);
 
-  // console.log(assets);
   // // Guns
   // const inventory = {
   //   primary: 'ak-47',

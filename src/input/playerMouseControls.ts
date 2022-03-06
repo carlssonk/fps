@@ -1,4 +1,4 @@
-import { camera } from '../player/player';
+import { camera, viewmodel } from '../player/player';
 import { sensitivity } from './commands/settingsHandler';
 import * as THREE from 'three';
 import { assets } from '../game';
@@ -36,7 +36,10 @@ const playerMouseControlsHandler = (): any => {
 
       if (shootDelay <= 0.0) {
         //Shoot
-        assets['ak47'].fire();
+        // console.log(viewmodel.children[1]);
+        // console.log(assets['ak47']);
+        // viewmodel.children[0].fire();
+        viewmodel.fire();
 
         shootDelay = fireRate;
       }

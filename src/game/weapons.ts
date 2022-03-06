@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { camera } from '../player/player';
+import { camera, viewmodel } from '../player/player';
+import { assets } from './index';
 
 export let mixer: any;
 
@@ -7,45 +8,32 @@ export let mixer: any;
 const WEAPON_POSITION = [-0.02, 0.02, 0.06];
 
 export const weapons = {
-  ak47: (gltf: any) => ak47(gltf)
-};
+  addAnimations(arms: any, weapon: any) {
+    const animationGroup = new THREE.AnimationObjectGroup(
+      arms.scene,
+      weapon.scene
+    );
 
-const ak47 = (gltf: any) => {
-  const weapon = gltf.scene;
+    mixer = new THREE.AnimationMixer(animationGroup);
 
-  camera.add(weapon);
+    // ACTIONS arms
+    const drawActionArms = createAction(arms, 'ak47_draw');
+    viewmodel.draw = () => {
+      drawActionArms.stop();
+      drawActionArms.play();
+    };
 
-  weapon.rotation.y = Math.PI - 0.1;
-  weapon.position.set(...WEAPON_POSITION);
-  weapon.defaultPosition = {
-    x: WEAPON_POSITION[0],
-    y: WEAPON_POSITION[1],
-    z: WEAPON_POSITION[2]
-  };
-  weapon.scale.set(0.02, 0.02, 0.02);
-
-  mixer = new THREE.AnimationMixer(weapon);
-
-  // ACTIONS
-  const drawAction = createAction(gltf, 'draw');
-  gltf.draw = () => {
-    drawAction.stop();
-    drawAction.play();
-  };
-
-  const fireAction = createAction(gltf, 'fire1');
-  gltf.fire = () => {
-    fireAction.stop();
-    fireAction.play();
-  };
-  console.log(gltf);
+    const fireActionArms = createAction(arms, 'ak47_fire1');
+    viewmodel.fire = () => {
+      fireActionArms.stop();
+      fireActionArms.play();
+    };
+  }
 };
 
 const createAction = (gltf: any, actionName: string) => {
   const clips = gltf.animations;
   const clip = THREE.AnimationClip.findByName(clips, actionName);
-  console.log(clips);
-  console.log(clip);
 
   const action = mixer.clipAction(clip);
 

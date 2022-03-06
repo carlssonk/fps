@@ -2,10 +2,12 @@ import * as THREE from 'three';
 import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 import { fov } from '../input/commands/settingsHandler';
 import { scene } from '../scene/createScene';
+import { weapons } from '../game/weapons';
 
 export let hasJoinedMap = false;
 export const PLAYER_HEIGHT = 0.92;
 // export const PLAYER_SPAWN_POS = [0, 0, -4];
+const WEAPON_POSITION = [-0.02, 0.02, 0.06];
 
 export const camera = new THREE.PerspectiveCamera(
   fov,
@@ -29,9 +31,18 @@ export const playerDirection = new THREE.Vector3();
 
 export let playerOnFloor = false;
 
+// const inventory = {
+
+// }
+
+export const viewmodel: any = new THREE.Group();
+
 const playerHandler = () => {
   // Player
   camera.rotation.order = 'YXZ';
+
+  let primaryWeapon: any;
+  let secondaryWeapon: any;
 
   return {
     get camera() {
@@ -49,6 +60,31 @@ const playerHandler = () => {
     set fov(value: number) {
       camera.fov = value;
       camera.updateProjectionMatrix();
+    },
+
+    set weapon(value: any) {
+      primaryWeapon = value;
+    },
+
+    get weapon() {
+      return primaryWeapon;
+    },
+
+    attachViewmodel(armsModel: any, weaponModel: any) {
+      viewmodel.rotation.y = Math.PI - 0.1;
+
+      viewmodel.add(armsModel.scene);
+      viewmodel.add(weaponModel.scene);
+
+      viewmodel.position.set(...WEAPON_POSITION);
+      viewmodel.defaultPosition = {
+        x: WEAPON_POSITION[0],
+        y: WEAPON_POSITION[1],
+        z: WEAPON_POSITION[2]
+      };
+      viewmodel.scale.set(0.02, 0.02, 0.02);
+
+      camera.add(viewmodel);
     }
   };
 };

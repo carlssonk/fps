@@ -3,7 +3,8 @@ import {
   playerOnFloor,
   playerVelocity,
   playerCollider,
-  camera
+  camera,
+  viewmodel
 } from './player';
 import { gameLoop } from '../index';
 import {
@@ -34,7 +35,7 @@ export const updatePlayer = (deltaTime: number) => {
   camera.position.copy(playerCollider.end);
 
   // Update gun movement
-  weaponMovement(deltaTime);
+  viewmodelBobbing();
 };
 
 function playerCollisions() {
@@ -56,10 +57,10 @@ function playerCollisions() {
   }
 }
 
-const weaponMovement = (deltaTime: number) => {
+const viewmodelBobbing = () => {
   const avgVelocity = Math.abs(playerVelocity.x) + Math.abs(playerVelocity.z);
   const offset = avgVelocity / 1000;
-  const weapon = assets['ak47'].scene;
+  const weapon = viewmodel;
 
   // View offset
   weapon.position.set(

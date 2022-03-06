@@ -39,7 +39,7 @@ const menuHandler = () => {
     async hide() {
       if (!hasJoinedMap) {
         // Init player on map
-        assets['ak47'].draw();
+        // assets['ak47'].draw();
 
         setPlayerPosition([-3, -2, 11], 0);
         player.hasJoinedMap = true;
