@@ -29,12 +29,14 @@ export let assets: any = {};
 import levelPath from '../assets/models/aim-map-compressed.glb';
 import armsPath from '../assets/models/arms.glb';
 import ak47Path from '../assets/models/ak47.glb';
+import glockPath from '../assets/models/glock.glb';
 
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
     { name: 'arms', path: armsPath, options: { addToScene: false } },
-    { name: 'ak47', path: ak47Path, options: { addToScene: false } }
+    { name: 'ak47', path: ak47Path, options: { addToScene: false } },
+    { name: 'glock', path: glockPath, options: { addToScene: false } }
   ]);
 };
 
@@ -44,9 +46,9 @@ export const GAME = async () => {
   assets = await ASSETS();
 
   // Attach arms and weapon to viewmodel
-  player.attachViewmodel(assets['arms'], assets['ak47']);
+  player.attachViewmodel(assets['arms'], assets['glock']);
   // Add animations to arms and weapons
-  weapons.addAnimations(assets['arms'], assets['ak47']);
+  weapons.addAnimations(assets['arms'], assets['glock']);
 
   // // Guns
   // const inventory = {

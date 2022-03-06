@@ -17,13 +17,13 @@ export const weapons = {
     mixer = new THREE.AnimationMixer(animationGroup);
 
     // ACTIONS arms
-    const drawActionArms = createAction(arms, 'ak47_draw');
+    const drawActionArms = createAction(arms, 'glock_draw');
     viewmodel.draw = () => {
       drawActionArms.stop();
       drawActionArms.play();
     };
 
-    const fireActionArms = createAction(arms, 'ak47_fire1');
+    const fireActionArms = createAction(arms, 'glock_firesingle');
     viewmodel.fire = () => {
       fireActionArms.stop();
       fireActionArms.play();
@@ -33,6 +33,7 @@ export const weapons = {
 
 const createAction = (gltf: any, actionName: string) => {
   const clips = gltf.animations;
+  console.log(clips);
   const clip = THREE.AnimationClip.findByName(clips, actionName);
 
   const action = mixer.clipAction(clip);
