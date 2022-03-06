@@ -1,5 +1,11 @@
 import './assets/styles/main.css';
 
+import * as THREE from 'three';
+
+import { GAME } from './game';
+
+import { mixer } from './game/weapons';
+
 // Player controls, W A S D, JUMP etc.
 import { playerKeyboardControls } from './input/playerKeyboardControls';
 
@@ -7,7 +13,7 @@ import { playerKeyboardControls } from './input/playerKeyboardControls';
 import { teleportPlayerIfOob } from './scene/teleportPlayerIfOob';
 
 // Player camera
-import { camera, playerCollider } from './player/player';
+import { camera } from './player/player';
 
 // Update player position
 import { updatePlayer } from './player/updatePlayer';
@@ -19,36 +25,16 @@ import { mapLoader } from './scene/mapLoader';
 import { createGameLoop } from './utils';
 
 // Scene and renderer, the core of three.js / WebGL
-import { scene, renderer } from './scene/createScene';
+import { scene, sceneTop, renderer } from './scene/createScene';
 
 // Fps gui
 import { stats } from './gui/stats';
 
 import { initGui } from './gui/initGui';
 
-import { playerMouseMove } from './input/playerMouseMove';
+import { playerMouseControls } from './input/playerMouseControls';
 
 initGui();
-playerMouseMove();
-
-// // PointerLockEvent
-// document.addEventListener(
-//   'mousedown',
-//   () => {
-//     document.body.requestPointerLock();
-
-//     // We need to explicitly set player position and player height when user interacts with page
-
-//     // z-axis position
-//     playerCollider.start.z = -5;
-//     playerCollider.end.z = -5;
-//     // y-axis position
-//     playerCollider.start.y = 2;
-//     // player height (relative to start.y)
-//     playerCollider.end.y = 3;
-//   },
-//   { once: true }
-// );
 
 function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -61,13 +47,23 @@ window.addEventListener('resize', onWindowResize);
 
 // Container for all functions that are dynamic
 const myGameLoop = (deltaTime: number) => {
+  mixer.update(deltaTime);
+
   playerKeyboardControls(deltaTime);
+
+  playerMouseControls.Update(deltaTime);
 
   updatePlayer(deltaTime);
 
   teleportPlayerIfOob();
 
+  // renderer.clear();
+
   renderer.render(scene, camera);
+
+  // renderer.clearDepth();
+
+  // renderer.render(sceneTop, camera);
 
   stats.update();
 };
@@ -76,17 +72,63 @@ const myGameLoop = (deltaTime: number) => {
 export const gameLoop = createGameLoop(myGameLoop);
 
 // Infinite looper
-function animate(deltaTime: number) {
+export const animate = (deltaTime: number) => {
   gameLoop.loop(deltaTime);
 
   requestAnimationFrame(animate);
-}
+};
 
 // Load model
 // import WORLD from './models/collision-world.glb';
-import AimMap from './assets/models/aim-map-compressed-2.glb';
-mapLoader(AimMap, () => {
-  // setTimeout(() => {
-  animate(0);
-  // }, 500);
-});
+// import AimMap from './assets/models/aim-map-compressed.glb';
+// mapLoader(AimMap, () => {
+// setTimeout(() => {
+// animate(0);
+// }, 500);
+// });
+
+// Load Weapon
+// import ak47 from './assets/models/ak47.glb';
+// console.log(ak47);
+// import { loadGLTF } from './scene/loadGLTF';
+// export let ak47Model: any;
+// let mixer: any;
+// loadGLTF(ak47).then((gltf: any) => {
+//   ak47Model = gltf.scene;
+//   // const cameraOffset = new THREE.Vector3(0.0, 5.0, -5.0);
+//   //
+
+//   // ak47Model.renderOrder = 999;
+//   // ak47Model.onBeforeRender = function (renderer: { clearDepth: () => void }) {
+//   //   renderer.clearDepth();
+//   // };
+
+//   // camera.add(ak47Model);
+//   // camera.add(ak47Model.children[0]);
+//   // mesh.renderOrder=-1
+//   camera.add(ak47Model);
+//   // ak47Model.renderOrder = 1;
+//   // console.log(ak47Model);
+//   // console.log(ak47Model.material);
+
+//   ak47Model.rotation.y = Math.PI - 0.1;
+//   ak47Model.position.set(-0.02, 0.02, 0.06);
+//   ak47Model.scale.set(0.02, 0.02, 0.02);
+
+//   mixer = new THREE.AnimationMixer(ak47Model);
+//   const clips = gltf.animations;
+//   const clip = THREE.AnimationClip.findByName(clips, 'draw');
+
+//   const action = mixer.clipAction(clip);
+
+//   action.clampWhenFinished = true;
+//   action.setLoop(THREE.LoopOnce);
+
+//   setTimeout(() => {
+//     action.play();
+//   }, 500);
+//   console.log(action);
+// });
+
+// START GAME
+GAME();

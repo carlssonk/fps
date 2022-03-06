@@ -5,5 +5,5 @@ import { crosshair } from './crosshair';
 export const initGui = (): void => {
   consoleEventListeners();
   menuEventListeners();
-  console.log(crosshair);
+  crosshair;
 };

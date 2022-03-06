@@ -3,7 +3,7 @@ import {
   hasJoinedMap,
   player,
   PLAYER_HEIGHT,
-  PLAYER_SPAWN_POS,
+  // PLAYER_SPAWN_POS,
   playerCollider,
   camera
 } from './player/player';
@@ -32,6 +32,10 @@ export const createGameLoop = (func: (deltaTime: number) => void) => {
 
     get deltaTime() {
       return deltaTime;
+    },
+
+    get elapsedTime() {
+      return lastTime;
     },
 
     // the frame-capped loop function
