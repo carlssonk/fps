@@ -1,8 +1,7 @@
 import { loadAsset } from '../scene/loadAsset';
 import { animate } from '../index';
 import { assetLoader } from '../scene/assetLoader';
-import { weapons } from './weapons';
-import { player } from '../player/player';
+import { player, viewmodel } from '../player/player';
 
 // Game logic in game/ folder
 // Game gui in gui/ folder
@@ -42,21 +41,27 @@ const ASSETS = async () => {
 
 // Entry for all game logic.
 export const GAME = async () => {
-  // Map
+  // Object containing all game assets
   assets = await ASSETS();
 
-  // Attach arms and weapon to viewmodel
-  player.attachViewmodel(assets['arms'], assets['glock']);
-  // Add animations to arms and weapons
-  weapons.addAnimations(assets['arms'], assets['glock']);
+  // Attach default arms and weapon to viewmodel
+  player.attachViewmodel(assets['arms'], assets['ak47']);
 
-  // // Guns
-  // const inventory = {
-  //   primary: 'ak-47',
-  //   secondary: 'glock-18',
-  //   knife: 'default knife',
-  //   utility1: 'grenade',
-  //   utility2: 'smoke',
-  //   utility3: 'flash'
-  // };
+  // How to pickup a weapon from ground
+  // viewmodel.pickup("glock") - Picks up a weapon but not switching to it
+  //   viewmodel.add(glock) - Add item to viewmodel.children
+  //   viewmodel.weapon = glock - Change current weapon
+
+  // How to switch to a weapon
+  // viewmodel.switch("glock") - Switches to weapon in inverntory
+  //   viewmodel.weapon = glock - Change current weapon
+  //   viewmodel.weapon.draw()
+
+  // How to drop a weapon
+  // viewmodel.drop("glock")
+  //   viewmodel.weapon = ak47 - Change to another weapon in children
+  //   viewmodel.remove(glock) - Remove item from viewmodel.children
+
+  // How to cycle between weapons
+  // just use to viewmodel.children array to determine next prev weapons (keep the list sorted if needed)
 };

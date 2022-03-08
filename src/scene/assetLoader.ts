@@ -6,7 +6,8 @@ export const assetLoader = async (assetsArray: Array<any>) => {
   const assets: any = {};
 
   function addAsset(asset: string, name: string, options?: object) {
-    return loadAsset(asset, options).then((result) => {
+    return loadAsset(asset, options).then((result: any) => {
+      result.name = name;
       assets[name] = result;
     });
   }

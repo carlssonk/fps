@@ -1,7 +1,9 @@
 import {
   playerOnFloor,
   playerVelocity,
-  playerDirection
+  playerDirection,
+  viewmodel,
+  player
 } from '../player/player';
 import { bunnyhop, damping } from './commands/settingsHandler';
 import { camera } from '../player/player';
@@ -53,6 +55,30 @@ export const playerKeyboardControls = (deltaTime: number): void => {
   }
 };
 
+const handleSwitchWeapon = (key: string) => {
+  if (key === 'Digit2') {
+    console.log('SWITCH GLOCK');
+    // console.log();
+    player.pickupWeapon();
+    // console.log(viewmodel.children);
+    // viewmodel.children[1].visible = false;
+  }
+};
+
+document.addEventListener('keydown', (event) => {
+  keyStates[event.code] = true;
+
+  offsetJump.startDebounce(event.code);
+
+  handleSwitchWeapon(event.code);
+});
+
+document.addEventListener('keyup', (event) => {
+  keyStates[event.code] = false;
+
+  offsetJump.setSpaceIsNotPressed(event.code);
+});
+
 function getForwardVector() {
   camera.getWorldDirection(playerDirection);
   playerDirection.y = 0;
@@ -70,17 +96,14 @@ function getSideVector() {
   return playerDirection;
 }
 
-document.addEventListener('keydown', (event) => {
-  keyStates[event.code] = true;
-
-  offsetJump.startDebounce(event.code);
-});
-
-document.addEventListener('keyup', (event) => {
-  keyStates[event.code] = false;
-
-  offsetJump.setSpaceIsNotPressed(event.code);
-});
+const isWalkingDiagonally = () => {
+  return (
+    (keyStates['KeyW'] && keyStates['KeyD']) ||
+    (keyStates['KeyD'] && keyStates['KeyS']) ||
+    (keyStates['KeyS'] && keyStates['KeyA']) ||
+    (keyStates['KeyA'] && keyStates['KeyW'])
+  );
+};
 
 // If we hit jump 50 milliseconds before we hit ground, we will automatically jump when player hits ground
 // We can later use this logic to increase players speed if user hits jump in the 50ms timeframe
@@ -107,15 +130,6 @@ const jumpBeforeHittingFloor = () => {
       spaceIsPressed = false;
     }
   };
-};
-
-const isWalkingDiagonally = () => {
-  return (
-    (keyStates['KeyW'] && keyStates['KeyD']) ||
-    (keyStates['KeyD'] && keyStates['KeyS']) ||
-    (keyStates['KeyS'] && keyStates['KeyA']) ||
-    (keyStates['KeyA'] && keyStates['KeyW'])
-  );
 };
 
 const offsetJump = jumpBeforeHittingFloor();

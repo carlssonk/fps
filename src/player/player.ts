@@ -3,11 +3,12 @@ import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 import { fov } from '../input/commands/settingsHandler';
 import { scene } from '../scene/createScene';
 import { weapons } from '../game/weapons';
+import { assets } from '../game';
 
 export let hasJoinedMap = false;
 export const PLAYER_HEIGHT = 0.92;
-// export const PLAYER_SPAWN_POS = [0, 0, -4];
-const WEAPON_POSITION = [-0.02, 0.02, 0.06];
+
+const WEAPON_POSITION = [0.02, -0.01, 0.02];
 
 export const camera = new THREE.PerspectiveCamera(
   fov,
@@ -71,7 +72,8 @@ const playerHandler = () => {
     },
 
     attachViewmodel(armsModel: any, weaponModel: any) {
-      viewmodel.rotation.y = Math.PI - 0.1;
+      // Add viewmodel to scene
+      viewmodel.rotation.y = Math.PI;
 
       viewmodel.add(armsModel.scene);
       viewmodel.add(weaponModel.scene);
@@ -82,9 +84,19 @@ const playerHandler = () => {
         y: WEAPON_POSITION[1],
         z: WEAPON_POSITION[2]
       };
-      viewmodel.scale.set(0.02, 0.02, 0.02);
+      viewmodel.scale.set(0.01, 0.01, 0.008);
 
       camera.add(viewmodel);
+      // Add animations
+      weapons[weaponModel.name].addAnimations(armsModel, weaponModel);
+    },
+
+    pickupWeapon() {
+      viewmodel.children[1].visible = false;
+      viewmodel.add(viewmodel.secondary.scene);
+
+      // Add animations
+      weapons['glock'].addAnimations(assets['arms'], assets['glock']);
     }
   };
 };
