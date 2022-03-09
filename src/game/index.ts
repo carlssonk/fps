@@ -46,11 +46,12 @@ export const GAME = async () => {
 
   // Attach default arms and weapon to viewmodel
   player.attachViewmodel(assets['arms'], assets['ak47']);
+  // Add secondary weapon to viewmodel
+  // player.pickupWeapon(assets['glock']);
 
   // How to pickup a weapon from ground
   // viewmodel.pickup("glock") - Picks up a weapon but not switching to it
   //   viewmodel.add(glock) - Add item to viewmodel.children
-  //   viewmodel.weapon = glock - Change current weapon
 
   // How to switch to a weapon
   // viewmodel.switch("glock") - Switches to weapon in inverntory

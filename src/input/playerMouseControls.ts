@@ -39,7 +39,8 @@ const playerMouseControlsHandler = (): any => {
         // console.log(viewmodel.children[1]);
         // console.log(assets['ak47']);
         // viewmodel.children[0].fire();
-        viewmodel.fire();
+        // viewmodel.fire();
+        viewmodel.weapon.fire();
 
         shootDelay = fireRate;
       }

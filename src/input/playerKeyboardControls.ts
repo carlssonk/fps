@@ -56,10 +56,15 @@ export const playerKeyboardControls = (deltaTime: number): void => {
 };
 
 const handleSwitchWeapon = (key: string) => {
-  if (key === 'Digit2') {
-    console.log('SWITCH GLOCK');
+  // if (key === 'Digit2') {
+  //   // console.log();
+  //   player.switchWeapon('glock');
+  //   // console.log(viewmodel.children);
+  //   // viewmodel.children[1].visible = false;
+  // }
+  if (key === 'Digit1') {
     // console.log();
-    player.pickupWeapon();
+    player.switchWeapon('ak47');
     // console.log(viewmodel.children);
     // viewmodel.children[1].visible = false;
   }

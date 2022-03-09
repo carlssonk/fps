@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 import { GAME } from './game';
 
-import { mixer } from './game/weapons';
+import { mixerHandler } from './game/weapons';
 
 // Player controls, W A S D, JUMP etc.
 import { playerKeyboardControls } from './input/playerKeyboardControls';
@@ -47,7 +47,7 @@ window.addEventListener('resize', onWindowResize);
 
 // Container for all functions that are dynamic
 const myGameLoop = (deltaTime: number) => {
-  mixer.update(deltaTime);
+  mixerHandler.Update(deltaTime);
 
   playerKeyboardControls(deltaTime);
 
