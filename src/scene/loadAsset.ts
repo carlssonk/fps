@@ -8,7 +8,7 @@ const loader = new GLTFLoader();
 
 interface defaultOptions {
   isWorld?: boolean;
-  addToScene?: boolean;
+  viewmodel?: boolean;
 }
 const defaultOptions = { isWorld: false, addToScene: true };
 
@@ -20,7 +20,7 @@ export const loadAsset = (
     loader.load(model, (gltf) => {
       const opts = { ...defaultOptions, ...options };
 
-      if (opts.addToScene) scene.add(gltf.scene);
+      if (!opts.viewmodel) scene.add(gltf.scene);
       if (opts.isWorld) worldOctree.fromGraphNode(gltf.scene);
 
       gltf.scene.traverse((child) => {

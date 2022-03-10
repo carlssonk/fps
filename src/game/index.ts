@@ -33,9 +33,17 @@ import glockPath from '../assets/models/glock.glb';
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
-    { name: 'arms', path: armsPath, options: { addToScene: false } },
-    { name: 'ak47', path: ak47Path, options: { addToScene: false } },
-    { name: 'glock', path: glockPath, options: { addToScene: false } }
+    { name: 'arms', path: armsPath, options: { viewmodel: true } },
+    {
+      name: 'ak47',
+      path: ak47Path,
+      options: { viewmodel: true, type: 'primary' }
+    },
+    {
+      name: 'glock',
+      path: glockPath,
+      options: { viewmodel: true, type: 'secondary' }
+    }
   ]);
 };
 
@@ -47,7 +55,7 @@ export const GAME = async () => {
   // Attach default arms and weapon to viewmodel
   player.attachViewmodel(assets['arms'], assets['ak47']);
   // Add secondary weapon to viewmodel
-  // player.pickupWeapon(assets['glock']);
+  player.pickupWeapon(assets['glock']);
 
   // How to pickup a weapon from ground
   // viewmodel.pickup("glock") - Picks up a weapon but not switching to it

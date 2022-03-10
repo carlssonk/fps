@@ -81,6 +81,8 @@ const createAnimations = (arms: any, weapon: any, animations: object) => {
       // animation.stop();
     };
   }
+
+  // console.log(weapon);
   // weapon.scene.visible = true;
   // viewmodel.weapon = weapon;
 

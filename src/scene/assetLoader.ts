@@ -1,13 +1,16 @@
 import { loadAsset } from './loadAsset';
 import { animate } from '../index';
+import { AnyKindOfDictionary } from 'lodash';
 
 export const assetLoader = async (assetsArray: Array<any>) => {
   const promises: any = [];
   const assets: any = {};
 
-  function addAsset(asset: string, name: string, options?: object) {
+  function addAsset(asset: string, name: string, options?: any) {
     return loadAsset(asset, options).then((result: any) => {
       result.name = name;
+      if (options && options.type) result.type = options.type;
+      console.log(options);
       assets[name] = result;
     });
   }

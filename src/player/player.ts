@@ -78,6 +78,8 @@ const playerHandler = () => {
       viewmodel.add(armsModel.scene);
       viewmodel.add(weaponModel.scene);
       viewmodel.weapon = weaponModel;
+      // Add reference to weapon type
+      viewmodel[weaponModel.type] = weaponModel;
 
       viewmodel.position.set(...WEAPON_POSITION);
       viewmodel.defaultPosition = {
@@ -94,29 +96,25 @@ const playerHandler = () => {
     },
 
     pickupWeapon(weaponModel: any) {
-      // viewmodel.children[1].visible = false;
       weaponModel.scene.visible = false;
       viewmodel.add(weaponModel.scene);
 
       // Add animations
-      weapons['glock'].addAnimations(assets['arms'], assets['glock']);
+      weapons[weaponModel.name].addAnimations(assets['arms'], weaponModel);
+
+      // Add reference to weapon type
+      viewmodel[weaponModel.type] = weaponModel;
     },
 
-    switchWeapon(weapon: string) {
-      // if (weapon === 'glock') {
-      //   // Hide current weapons
-      //   viewmodel.weapon.scene.visible = false;
-      //   // viewmodel.weapon.draw();
-      //   // Change to new weapon
-      //   viewmodel.weapon = assets[weapon];
+    switchWeapon(type: string) {
+      if (viewmodel.weapon.name === viewmodel[type].name) return;
 
-      //   viewmodel.weapon.scene.visible = true;
-      // }
+      viewmodel[type].scene.visible = true;
+      viewmodel.weapon.scene.visible = false;
+
+      viewmodel.weapon = viewmodel[type];
 
       viewmodel.weapon.draw();
-
-      // Show new animation and add animations
-      // weapons['glock'].addAnimations(assets['arms'], assets[weapon]);
     }
   };
 };
