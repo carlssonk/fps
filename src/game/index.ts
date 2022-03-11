@@ -33,7 +33,11 @@ import glockPath from '../assets/models/glock.glb';
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
-    { name: 'arms', path: armsPath, options: { viewmodel: true } },
+    {
+      name: 'arms',
+      path: armsPath,
+      options: { viewmodel: true, type: 'arms' }
+    },
     {
       name: 'ak47',
       path: ak47Path,
@@ -56,21 +60,7 @@ export const GAME = async () => {
   player.attachViewmodel(assets['arms'], assets['ak47']);
   // Add secondary weapon to viewmodel
   player.pickupWeapon(assets['glock']);
-
-  // How to pickup a weapon from ground
-  // viewmodel.pickup("glock") - Picks up a weapon but not switching to it
-  //   viewmodel.add(glock) - Add item to viewmodel.children
-
-  // How to switch to a weapon
-  // viewmodel.switch("glock") - Switches to weapon in inverntory
-  //   viewmodel.weapon = glock - Change current weapon
-  //   viewmodel.weapon.draw()
-
-  // How to drop a weapon
-  // viewmodel.drop("glock")
-  //   viewmodel.weapon = ak47 - Change to another weapon in children
-  //   viewmodel.remove(glock) - Remove item from viewmodel.children
-
-  // How to cycle between weapons
-  // just use to viewmodel.children array to determine next prev weapons (keep the list sorted if needed)
+  // Add knife
+  // Add utilities
+  console.log(viewmodel);
 };

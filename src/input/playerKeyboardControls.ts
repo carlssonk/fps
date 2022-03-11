@@ -57,16 +57,10 @@ export const playerKeyboardControls = (deltaTime: number): void => {
 
 const handleSwitchWeapon = (key: string) => {
   if (key === 'Digit1') {
-    // console.log();
     player.switchWeapon('primary');
-    // console.log(viewmodel.children);
-    // viewmodel.children[1].visible = false;
   }
   if (key === 'Digit2') {
-    // console.log();
     player.switchWeapon('secondary');
-    // console.log(viewmodel.children);
-    // viewmodel.children[1].visible = false;
   }
 };
 

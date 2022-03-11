@@ -10,7 +10,7 @@ interface defaultOptions {
   isWorld?: boolean;
   viewmodel?: boolean;
 }
-const defaultOptions = { isWorld: false, addToScene: true };
+const defaultOptions = { isWorld: false, viewmodel: false };
 
 export const loadAsset = (
   model: string,

@@ -8,6 +8,7 @@ const _PI_2 = Math.PI / 2;
 // export const mouseTime = 0;
 let isShooting = false;
 let fireRate = 0.12;
+let automatic = false;
 let shootDelay = 0.0;
 
 const playerMouseControlsHandler = (): any => {
@@ -34,12 +35,11 @@ const playerMouseControlsHandler = (): any => {
       if (!isShooting)
         return (shootDelay = Math.max(0.0, shootDelay - deltaTime));
 
+      if (!automatic) isShooting = false;
+
       if (shootDelay <= 0.0) {
         //Shoot
-        // console.log(viewmodel.children[1]);
-        // console.log(assets['ak47']);
-        // viewmodel.children[0].fire();
-        // viewmodel.fire();
+
         viewmodel.weapon.fire();
 
         shootDelay = fireRate;

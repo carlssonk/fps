@@ -1,11 +1,7 @@
-import { update } from 'lodash';
 import * as THREE from 'three';
-// import { AnimationObjectGroup, AnimationMixer, AnimationClip } from 'three/src/animation/';
 import { AnimationObjectGroup } from 'three/src/animation/AnimationObjectGroup';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { AnimationClip } from 'three/src/animation/AnimationClip';
-import { camera, viewmodel } from '../player/player';
-import { assets } from './index';
 
 let mixers: Array<any> = [];
 export const mixerHandler = {
@@ -23,7 +19,6 @@ export const mixerHandler = {
 };
 
 // Relative to camera
-const WEAPON_POSITION = [-0.02, 0.02, 0.06];
 let prevAnimation: any;
 
 interface animationsInferface {
@@ -77,17 +72,8 @@ const createAnimations = (arms: any, weapon: any, animations: object) => {
         prevAnimation.stop();
         animation.stop();
       }
-
-      // animation.stop();
     };
   }
-
-  // console.log(weapon);
-  // weapon.scene.visible = true;
-  // viewmodel.weapon = weapon;
-
-  // We need to play an animation directly to set default animation
-  // viewmodel.weapon.draw();
 };
 
 const createAction = (gltf: any, actionName: string, mixer: any) => {

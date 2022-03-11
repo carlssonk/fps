@@ -18,8 +18,6 @@ export const camera = new THREE.PerspectiveCamera(
 );
 // Add camera to scene so we can attach items to it such as arms and weapons
 scene.add(camera);
-// camera.add(ak47Model);
-// console.log(camera.add);
 
 export const playerCollider = new Capsule(
   new THREE.Vector3(0, 0.35, 0),
@@ -32,18 +30,11 @@ export const playerDirection = new THREE.Vector3();
 
 export let playerOnFloor = false;
 
-// const inventory = {
-
-// }
-
 export const viewmodel: any = new THREE.Group();
 
 const playerHandler = () => {
   // Player
   camera.rotation.order = 'YXZ';
-
-  let primaryWeapon: any;
-  let secondaryWeapon: any;
 
   return {
     get camera() {
@@ -63,24 +54,9 @@ const playerHandler = () => {
       camera.updateProjectionMatrix();
     },
 
-    set weapon(value: any) {
-      primaryWeapon = value;
-    },
-
-    get weapon() {
-      return primaryWeapon;
-    },
-
     attachViewmodel(armsModel: any, weaponModel: any) {
-      // Add viewmodel to scene
+      // Viewmodel transformations
       viewmodel.rotation.y = Math.PI;
-
-      viewmodel.add(armsModel.scene);
-      viewmodel.add(weaponModel.scene);
-      viewmodel.weapon = weaponModel;
-      // Add reference to weapon type
-      viewmodel[weaponModel.type] = weaponModel;
-
       viewmodel.position.set(...WEAPON_POSITION);
       viewmodel.defaultPosition = {
         x: WEAPON_POSITION[0],
@@ -89,29 +65,45 @@ const playerHandler = () => {
       };
       viewmodel.scale.set(0.01, 0.01, 0.008);
 
-      camera.add(viewmodel);
+      // Add viewmodel to scene
+      viewmodel.add(armsModel.scene);
+      viewmodel.add(weaponModel.scene);
+
+      // Add weapon references to viewmodel
+      viewmodel.weapon = weaponModel;
+      viewmodel[armsModel.type] = armsModel;
+      viewmodel[weaponModel.type] = weaponModel;
+
       // Add animations
       weapons[weaponModel.name].addAnimations(armsModel, weaponModel);
-      viewmodel.weapon.draw(); // To set default idle position state
+
+      camera.add(viewmodel);
+
+      // Set default idle position state
+      viewmodel.weapon.draw();
     },
 
     pickupWeapon(weaponModel: any) {
+      // Dont show the weapon we just picked up
       weaponModel.scene.visible = false;
       viewmodel.add(weaponModel.scene);
 
-      // Add animations
-      weapons[weaponModel.name].addAnimations(assets['arms'], weaponModel);
-
-      // Add reference to weapon type
+      // Add weapon references to viewmodel
       viewmodel[weaponModel.type] = weaponModel;
+
+      // Add animations
+      weapons[weaponModel.name].addAnimations(viewmodel.arms, weaponModel);
     },
 
     switchWeapon(type: string) {
+      // If we are holding the weapon that we want to switch to, return
       if (viewmodel.weapon.name === viewmodel[type].name) return;
 
-      viewmodel[type].scene.visible = true;
+      // Hide curremt weapon and show new weapon
       viewmodel.weapon.scene.visible = false;
+      viewmodel[type].scene.visible = true;
 
+      // Add weapon references to viewmodel
       viewmodel.weapon = viewmodel[type];
 
       viewmodel.weapon.draw();
