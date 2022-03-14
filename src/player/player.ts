@@ -20,10 +20,11 @@ export const camera = new THREE.PerspectiveCamera(
 scene.add(camera);
 
 export const playerCollider = new Capsule(
-  new THREE.Vector3(0, 0.35, 0),
-  new THREE.Vector3(0, 1, 0),
-  0.35
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(0, 0, 0),
+  0
 );
+console.log(playerCollider);
 
 export const playerVelocity = new THREE.Vector3();
 export const playerDirection = new THREE.Vector3();

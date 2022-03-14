@@ -39,7 +39,6 @@ const playerMouseControlsHandler = (): any => {
 
       if (shootDelay <= 0.0) {
         //Shoot
-
         viewmodel.weapon.fire();
 
         shootDelay = fireRate;
