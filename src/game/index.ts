@@ -1,8 +1,7 @@
 import { loadAsset } from '../scene/loadAsset';
 import { animate } from '../index';
 import { assetLoader } from '../scene/assetLoader';
-import { weapons } from './weapons';
-import { player } from '../player/player';
+import { player, viewmodel } from '../player/player';
 
 // Game logic in game/ folder
 // Game gui in gui/ folder
@@ -34,29 +33,34 @@ import glockPath from '../assets/models/glock.glb';
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
-    { name: 'arms', path: armsPath, options: { addToScene: false } },
-    { name: 'ak47', path: ak47Path, options: { addToScene: false } },
-    { name: 'glock', path: glockPath, options: { addToScene: false } }
+    {
+      name: 'arms',
+      path: armsPath,
+      options: { viewmodel: true, type: 'arms' }
+    },
+    {
+      name: 'ak47',
+      path: ak47Path,
+      options: { viewmodel: true, type: 'primary' }
+    },
+    {
+      name: 'glock',
+      path: glockPath,
+      options: { viewmodel: true, type: 'secondary' }
+    }
   ]);
 };
 
 // Entry for all game logic.
 export const GAME = async () => {
-  // Map
+  // Object containing all game assets
   assets = await ASSETS();
 
-  // Attach arms and weapon to viewmodel
-  player.attachViewmodel(assets['arms'], assets['glock']);
-  // Add animations to arms and weapons
-  weapons.addAnimations(assets['arms'], assets['glock']);
-
-  // // Guns
-  // const inventory = {
-  //   primary: 'ak-47',
-  //   secondary: 'glock-18',
-  //   knife: 'default knife',
-  //   utility1: 'grenade',
-  //   utility2: 'smoke',
-  //   utility3: 'flash'
-  // };
+  // Attach default arms and weapon to viewmodel
+  player.attachViewmodel(assets['arms'], assets['ak47']);
+  // Add secondary weapon to viewmodel
+  player.pickupWeapon(assets['glock']);
+  // Add knife
+  // Add utilities
+  console.log(viewmodel);
 };
