@@ -83,8 +83,7 @@ export const setPlayerPosition = (
 ): void => {
   playerCollider.start.set(position[0], position[1], position[2]);
   playerCollider.end.set(position[0], position[1] + PLAYER_HEIGHT, position[2]);
-  playerCollider.radius = 0.1;
-  console.log(playerCollider);
+  playerCollider.radius = 0.2;
 
   // Set camera rotation
   camera.rotation.y = rotation;
