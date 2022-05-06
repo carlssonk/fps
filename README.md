@@ -1,4 +1,4 @@
-fps (IN DEVELOPMENT)
+fps
 ====================
 
 #### A first person sandbox experience
