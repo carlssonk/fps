@@ -3,13 +3,16 @@ import { developerConsole } from '../gui/developerConsole';
 
 export const consoleEventListeners = () => {
   document.addEventListener('keydown', (event) => {
-    if (event.code === 'Backquote' && !menu.isVisible) {
+    if (
+      event.code === 'Backquote' ||
+      (event.code === 'IntlBackslash' && !menu.isVisible)
+    ) {
       developerConsole.toggle();
     }
   });
 
   document.addEventListener('keyup', (event) => {
-    if (event.code === 'Backquote') {
+    if (event.code === 'Backquote' || event.code === 'IntlBackslash') {
       developerConsole.clearInput();
     }
   });
