@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { Capsule } from 'three/examples/jsm/math/Capsule.js';
 import { fov } from '../input/commands/settingsHandler';
 import { scene } from '../scene/createScene';
-import { weapons } from '../game/weapons';
+import { weapons } from '../game/weapons/weapons';
 import { assets } from '../game';
 
 export let hasJoinedMap = false;

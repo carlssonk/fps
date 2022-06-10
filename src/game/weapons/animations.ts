@@ -26,30 +26,13 @@ interface animationsInferface {
   fire?: string;
 }
 
-const ak47 = {
-  addAnimations(arms: any, weapon: any) {
-    // Define your animation names here,
-    // Value must match values on both arms and weapon,
-    const animations: animationsInferface = {
-      draw: 'ak47_draw',
-      fire: 'ak47_fire1'
-    };
+export const addAnimations = (global: any) => {
+  return (arms: any, weapon: any) => {
+    // Get weapon animations defined in weapons.ts
+    const animations = global.weapons[weapon.name].animations;
 
     createAnimations(arms, weapon, animations);
-  }
-};
-
-const glock = {
-  addAnimations(arms: any, weapon: any) {
-    // Define your animation names here,
-    // Value must match values on both arms and weapon,
-    const animations: animationsInferface = {
-      draw: 'glock_draw',
-      fire: 'glock_firesingle'
-    };
-
-    createAnimations(arms, weapon, animations);
-  }
+  };
 };
 
 const createAnimations = (arms: any, weapon: any, animations: object) => {
@@ -89,7 +72,7 @@ const createAction = (gltf: any, actionName: string, mixer: any) => {
   return action;
 };
 
-export const weapons: any = {
-  ak47,
-  glock
-};
+// export const weapons: any = {
+//   ak47,
+//   glock
+// };

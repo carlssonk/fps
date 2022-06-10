@@ -2,7 +2,7 @@ import './assets/styles/main.css';
 
 import { GAME } from './game';
 
-import { mixerHandler } from './game/weapons';
+import { mixerHandler } from './game/weapons/animations';
 
 // Player controls, W A S D, JUMP etc.
 import { playerKeyboardControls } from './input/playerKeyboardControls';
