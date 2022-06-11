@@ -1,4 +1,9 @@
 import * as THREE from 'three';
+import { worldOctree } from './loadAsset';
+
+// console.log(THREE);
+
+// scene.add( helper );
 
 const createScene = (): THREE.Scene => {
   const scene = new THREE.Scene();
@@ -24,6 +29,12 @@ const createScene = (): THREE.Scene => {
   directionalLight.shadow.radius = 4;
   directionalLight.shadow.bias = -0.00006;
   scene.add(directionalLight);
+
+  // console.log("ADD OCTREE")
+  // Octree Helper
+  // const helper = new OctreeHelper(worldOctree);
+  // helper.visible = false;
+  // scene.add(helper);
 
   return scene;
 };

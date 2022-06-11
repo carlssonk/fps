@@ -4,6 +4,7 @@ import { player } from '../../player/player';
 import { validateInteger } from './validateInteger';
 import { validateFloat } from './validateFloat';
 import { validateBoolean } from './validateBoolean';
+import { octreeHelper } from '../../scene/loadAsset';
 
 // Setting Variables
 export let fov: number = 70;
@@ -12,6 +13,7 @@ export let sensitivity: number = 2.5;
 export let gravity: number = 15;
 export let bunnyhop: 0 | 1 = 0;
 export let damping: number = 15;
+export let show_octree: 0 | 1 = 0;
 
 interface SettingMethodsInterface {
   fps_max: number | ((value: string) => number | false);
@@ -20,6 +22,7 @@ interface SettingMethodsInterface {
   bunnyhop: number | ((value: string) => number | false);
   damping: number | ((value: string) => number | false);
   gravity: number | ((value: string) => number | false);
+  show_octree: number | ((value: string) => number | false);
   attachConsole: () => void;
 }
 
@@ -77,6 +80,15 @@ const settingsHandler = (): any => {
       gravity = value;
     },
 
+    // SHOW OCTREE
+    get show_octree() {
+      return show_octree;
+    },
+    set show_octree(value: 0 | 1) {
+      show_octree = value;
+      octreeHelper.visible = !!show_octree;
+    },
+
     attachConsole(): void {
       handleSettingsFromConsole();
     }
@@ -94,7 +106,8 @@ const handleSettingsFromConsole = (): void => {
     sensitivity: (value: string) => validateFloat(value, 0, 999),
     bunnyhop: (value: string) => validateBoolean(value),
     damping: (value: string) => validateFloat(value, 0, 999),
-    gravity: (value: string) => validateFloat(value, -30, 9999)
+    gravity: (value: string) => validateFloat(value, -30, 9999),
+    show_octree: (value: string) => validateBoolean(value)
   };
 
   // Dom.
