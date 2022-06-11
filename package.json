@@ -23,7 +23,7 @@
   "homepage": "https://github.com/carlssonk/fps#readme",
   "dependencies": {
     "lodash": "^4.17.21",
-    "three": "^0.137.5"
+    "three": "^0.141.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.178",

@@ -2,9 +2,12 @@ import { Mesh } from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { scene } from './createScene';
 import { Octree } from 'three/examples/jsm/math/Octree.js';
+// @ts-ignore
+import { OctreeHelper } from 'three/examples/jsm/helpers/OctreeHelper.js';
 
 export const worldOctree = new Octree();
 const loader = new GLTFLoader();
+export let octreeHelper: any = null;
 
 interface defaultOptions {
   isWorld?: boolean;
@@ -21,7 +24,13 @@ export const loadAsset = (
       const opts = { ...defaultOptions, ...options };
 
       if (!opts.viewmodel) scene.add(gltf.scene);
-      if (opts.isWorld) worldOctree.fromGraphNode(gltf.scene);
+      if (opts.isWorld) {
+        worldOctree.fromGraphNode(gltf.scene);
+        // Octree Helper
+        octreeHelper = new OctreeHelper(worldOctree);
+        octreeHelper.visible = false;
+        scene.add(octreeHelper);
+      }
 
       gltf.scene.traverse((child) => {
         if ((child as Mesh).isMesh) {
