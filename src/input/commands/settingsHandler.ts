@@ -104,6 +104,18 @@ const handleSettingsFromConsole = (): void => {
   button?.addEventListener('click', () => {
     // extract command and value from input string
     const text: string = input.value;
+    // if command i empty string
+    if (text.length === 0) return;
+    // if command is '!help'
+    if (text === '!help') {
+      for (let i = 0; i < commandsArray.length; i++) {
+        if (typeof commandsArray[i][1] === 'function') continue;
+        sendCommandStyle(
+          `${commandsArray[i][0]} <span style="color: #7866ff;">${commandsArray[i][1]}</span>`
+        );
+      }
+      return;
+    }
 
     const spaceIndex: number = text.indexOf(' ');
     const command: string = text.slice(0, spaceIndex);
