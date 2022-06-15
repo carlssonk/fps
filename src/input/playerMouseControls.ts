@@ -8,7 +8,7 @@ const _PI_2 = Math.PI / 2;
 // export const mouseTime = 0;
 let isShooting = false;
 let fireRate = 0.12;
-let automatic = false;
+let automatic = true;
 let shootDelay = 0.0;
 
 const playerMouseControlsHandler = (): any => {
@@ -58,7 +58,11 @@ const handleMove = (movementX: number, movementY: number) => {
   camera.rotation.x -= movementY / speed;
 
   // Limit camera rotation to be 180 degrees
-  camera.rotation.x = (<any>THREE).Math.clamp(camera.rotation.x, -_PI_2, _PI_2);
+  camera.rotation.x = (<any>THREE).MathUtils.clamp(
+    camera.rotation.x,
+    -_PI_2,
+    _PI_2
+  );
 };
 
 export const playerMouseControls = playerMouseControlsHandler();

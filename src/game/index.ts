@@ -1,5 +1,3 @@
-import { loadAsset } from '../scene/loadAsset';
-import { animate } from '../index';
 import { assetLoader } from '../scene/assetLoader';
 import { player, viewmodel } from '../player/player';
 
@@ -24,12 +22,13 @@ import { player, viewmodel } from '../player/player';
 
 export let assets: any = {};
 
-// Load all your assets for your game
+// Get path for assets
 import levelPath from '../assets/models/aim-map-compressed.glb';
 import armsPath from '../assets/models/arms.glb';
 import ak47Path from '../assets/models/ak47.glb';
 import glockPath from '../assets/models/glock.glb';
 
+// Returns object containing all game assets
 const ASSETS = async () => {
   return assetLoader([
     { name: 'level', path: levelPath, options: { isWorld: true } },
@@ -53,9 +52,8 @@ const ASSETS = async () => {
 
 // Entry for all game logic.
 export const GAME = async () => {
-  // Object containing all game assets
+  // Wait for all game assets to load
   assets = await ASSETS();
-
   // Attach default arms and weapon to viewmodel
   player.attachViewmodel(assets['arms'], assets['ak47']);
   // Add secondary weapon to viewmodel
