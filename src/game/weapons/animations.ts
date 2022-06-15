@@ -3,7 +3,9 @@ import { AnimationObjectGroup } from 'three/src/animation/AnimationObjectGroup';
 import { AnimationMixer } from 'three/src/animation/AnimationMixer';
 import { AnimationClip } from 'three/src/animation/AnimationClip';
 
+// variable containing all animations
 let mixers: Array<any> = [];
+// get animations, add animation, Update animation state (inside game loop)
 export const mixerHandler = {
   get mixers() {
     return mixers;
