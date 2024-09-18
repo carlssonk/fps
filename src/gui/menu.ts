@@ -1,5 +1,5 @@
 import '../assets/styles/menu.css';
-import { developerConsole } from '../gui/developerConsole';
+import { developerConsole } from './developerConsole';
 import { sleep, setPlayerPosition } from '../utils';
 import { assets } from '../game/index';
 import {
@@ -15,7 +15,7 @@ import {
 const GUI = document.querySelector('#gui') as HTMLDivElement;
 
 const menuHandler = () => {
-  const DOM = /*html*/ `
+  const DOM = /* html */ `
     <div class="menu">
       <div class="menu__buttonContainer">
         <button class="menu__button menu__resume">Resume</button>
@@ -26,6 +26,7 @@ const menuHandler = () => {
 
   // State
   let isVisible = true;
+  let isRemovingPointerLock = false;
 
   return {
     get isVisible() {
@@ -37,6 +38,7 @@ const menuHandler = () => {
     },
 
     async hide() {
+      if (isRemovingPointerLock) return;
       if (!hasJoinedMap) {
         // Init player on map
         // assets['ak47'].draw();
@@ -48,10 +50,19 @@ const menuHandler = () => {
       if (!developerConsole.isVisible) {
         document.body.requestPointerLock();
 
-        // Sleep here because requestPointerLock is async, and we want to see if the request got through.
-        // We only need 0 milliseconds because of the JavaScript Event Loop, if you know you know ;)
         await sleep(0);
-        if (document.pointerLockElement !== document.body) return;
+        while (document.pointerLockElement !== document.body) {
+          isRemovingPointerLock = true;
+          (
+            document.querySelector('.menu__resume') as HTMLDivElement
+          ).innerText = 'Loading...';
+          // eslint-disable-next-line no-await-in-loop
+          await sleep(100);
+          document.body.requestPointerLock();
+        }
+        (document.querySelector('.menu__resume') as HTMLDivElement).innerText =
+          'Resume';
+        isRemovingPointerLock = false;
       }
 
       (document.querySelector('.menu') as HTMLDivElement).style.display =
